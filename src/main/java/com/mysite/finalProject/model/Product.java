@@ -1,23 +1,31 @@
 package com.mysite.finalProject.model;
 
-import lombok.*;
+import jakarta.persistence.*;
+import lombok.Data;
 
-// NaverResult의 item에 들어감
-@ToString
-@AllArgsConstructor
-@NoArgsConstructor
-@Setter
-@Getter
+import java.time.LocalDateTime;
+
+
+@Data
+@Entity
+@Table(name = "product")
 public class Product {
-    private String title;
-    private String link;
-    private String image;
-    private String productId;
-    private String productType;
-    private String maker;
-    private String brand;
-    private String category1;
-    private String category2;
-    private String category3;
-    private String category4;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "name", nullable = false)
+    private String name;
+
+    @Column(name = "description", nullable = false)
+    private String description;
+
+    @Column(name = "price", nullable = false)
+    private Integer price;
+
+    @Column(name = "create_time", nullable = false)
+    private LocalDateTime createTime;
+
+
 }
