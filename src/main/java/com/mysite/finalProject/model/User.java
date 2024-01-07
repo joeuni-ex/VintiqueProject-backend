@@ -28,7 +28,7 @@ public class User {
     private String name;
 
     //회원가입 시 주소
-    @Column(name = "address",nullable = false)
+    @Column(name = "address",nullable =true)
     private String address;
 
     //생성 일자
@@ -40,4 +40,6 @@ public class User {
     @Column(name = "role",nullable = false)
     private Role role;
 
+    @Transient
+    private String token; //DB에 저장되지 않음
 }
