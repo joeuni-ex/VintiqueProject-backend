@@ -18,9 +18,9 @@ public class UserController {
     private final UserService userService;
 
     //유저 중복 검사
-    @GetMapping("/usercheck")
-    public ResponseEntity<Object> searchUser(@RequestBody User user){
-        if(userService.findByUsername(user.getUsername()).isPresent()){
+    @GetMapping("/checkuser")
+    public ResponseEntity<Object> searchUser(@RequestParam String username){
+        if(userService.findByUsername(username).isPresent()){
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
         return new ResponseEntity<>(HttpStatus.OK);
