@@ -5,6 +5,7 @@ import com.mysite.finalProject.security.jwt.JwtAuthorizationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -43,6 +44,7 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests((auth) -> auth
                         .requestMatchers("/api/authentication/**").permitAll()//로그인 ,로그아웃 허가한다.
+                        .requestMatchers(HttpMethod.GET,"/api/user/checkuser").permitAll()//유저 중복확인은 허가한다.
                         .anyRequest().authenticated()//그 외의 접근은 인증이 필요하다.
                 ).addFilterBefore(jwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
 
