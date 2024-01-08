@@ -2,14 +2,13 @@ package com.mysite.finalProject.Controller;
 
 import com.mysite.finalProject.Service.UserService;
 import com.mysite.finalProject.model.Role;
+import com.mysite.finalProject.model.User;
 import com.mysite.finalProject.security.UserPrinciple;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/user")
@@ -17,6 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     private final UserService userService;
+
+    //유저 중복 검사
+    @GetMapping("/usercheck")
+    public ResponseEntity<Object> searchUser(@RequestBody User user){
+        if(userService.findByUsername(user.getUsername()).isPresent()){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
     //유저의 권한 업데이트
     @PutMapping("change/{role}")//role-> 주소 변수로 들어감 @PathVariable로 받음
