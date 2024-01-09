@@ -1,5 +1,6 @@
 package com.mysite.finalProject.Controller;
 
+import com.mysite.finalProject.Dto.PostProductRequestDto;
 import com.mysite.finalProject.Service.ProductService;
 import com.mysite.finalProject.model.Product;
 import lombok.RequiredArgsConstructor;
@@ -17,14 +18,17 @@ public class ProductController {
 
     //제품 추가하기
     @PostMapping
-    public ResponseEntity<Object> saveProduct(@RequestBody Product product){
+    public ResponseEntity<Object> saveProduct(@RequestBody PostProductRequestDto product){
+        System.out.println(product.getBoardImageList());
+        System.out.println(product.getBoardImageList());
+
         return new ResponseEntity<>(productService.saveProduct(product), HttpStatus.CREATED);
     }
 
     //전체 제품 조회하기
     @GetMapping
     public ResponseEntity<Object> getAllProducts(){
-        return new ResponseEntity<>(productService.findeAllProducts(), HttpStatus.OK);
+        return new ResponseEntity<>(productService.findAllProducts(), HttpStatus.OK);
     }
 
     //제품 삭제하기
