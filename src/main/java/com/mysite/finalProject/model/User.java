@@ -28,7 +28,7 @@ public class User {
     private String name;
 
     //회원가입 시 주소
-    @Column(name = "address",nullable =true)
+    @Column(name = "address")
     private String address;
 
     //생성 일자

@@ -2,6 +2,7 @@ package com.mysite.finalProject.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDateTime;
 
@@ -27,8 +28,15 @@ public class Product {
     @Column(name = "price", nullable = false)
     private Integer price;
 
+    @Column(name ="favorite_count", nullable = false)
+    @ColumnDefault("0")
+    private Integer favoriteCount;
+
+    @Column(name ="review_count", nullable = false)
+    @ColumnDefault("0")
+    private Integer reviewCount;
+
     @Column(name = "create_time", nullable = false)
     private LocalDateTime createTime;
-
 
 }

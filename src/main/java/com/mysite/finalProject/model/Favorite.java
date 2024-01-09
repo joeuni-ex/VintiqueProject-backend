@@ -3,19 +3,12 @@ package com.mysite.finalProject.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.time.LocalDateTime;
-
-@Entity
 @Data
-@Table(name = "review")
-public class Review {
+@Entity
+@Table(name = "favorite")
+public class Favorite {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(name = "review_content", nullable = false)
-    private String reviewContent;
-
     @Column(name = "user_id", nullable = false)
     private Long userId;
 
@@ -29,9 +22,5 @@ public class Review {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Product product;
-
-    @Column(name = "create_time", nullable = false)
-    private LocalDateTime createTime;
-
 
 }
