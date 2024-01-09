@@ -1,15 +1,21 @@
 package com.mysite.finalProject.model;
 
+import com.mysite.finalProject.Dto.PostProductRequestDto;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 
 @Data
-@Entity
+@Entity(name = "product")
 @Table(name = "product")
+@NoArgsConstructor
 public class Product {
 
     @Id
@@ -37,6 +43,24 @@ public class Product {
     private Integer reviewCount;
 
     @Column(name = "create_time", nullable = false)
-    private LocalDateTime createTime;
+    private String createTime;
+
+
+
+    public Product(PostProductRequestDto dto){
+
+        Date now = Date.from(Instant.now());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
+        String createDateTime = simpleDateFormat.format(now);
+        this.id= 1L;
+        this.name = dto.getName();
+        this.description = dto.getDescription();
+        this.category = dto.getCategory();
+        this.price = dto.getPrice();
+        this.favoriteCount = 0;
+        this.reviewCount =0 ;
+        this.createTime = createDateTime;
+
+    }
 
 }
