@@ -1,4 +1,4 @@
-package com.mysite.finalProject.Service;
+package com.mysite.finalProject.service;
 
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;

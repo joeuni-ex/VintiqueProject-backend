@@ -1,6 +1,6 @@
-package com.mysite.finalProject.Controller;
+package com.mysite.finalProject.controller;
 
-import com.mysite.finalProject.Service.FileService;
+import com.mysite.finalProject.service.FileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;

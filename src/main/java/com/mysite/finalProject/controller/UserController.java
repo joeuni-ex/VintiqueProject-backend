@@ -1,8 +1,7 @@
-package com.mysite.finalProject.Controller;
+package com.mysite.finalProject.controller;
 
-import com.mysite.finalProject.Service.UserService;
+import com.mysite.finalProject.service.UserService;
 import com.mysite.finalProject.model.Role;
-import com.mysite.finalProject.model.User;
 import com.mysite.finalProject.security.UserPrinciple;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

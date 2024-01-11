@@ -1,6 +1,6 @@
 package com.mysite.finalProject.security;
 
-import com.mysite.finalProject.Service.UserService;
+import com.mysite.finalProject.service.UserService;
 import com.mysite.finalProject.model.User;
 import com.mysite.finalProject.utils.SecurityUtils;
 import lombok.RequiredArgsConstructor;

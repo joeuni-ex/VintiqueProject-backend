@@ -1,6 +1,6 @@
-package com.mysite.finalProject.Service;
+package com.mysite.finalProject.service;
 
-import com.mysite.finalProject.Dto.PostProductRequestDto;
+import com.mysite.finalProject.dto.PostProductRequestDto;
 import com.mysite.finalProject.model.Image;
 import com.mysite.finalProject.model.Product;
 import com.mysite.finalProject.repository.ImageRepository;

@@ -1,12 +1,10 @@
-package com.mysite.finalProject.Controller;
+package com.mysite.finalProject.controller;
 
-import com.mysite.finalProject.Dto.PostProductRequestDto;
-import com.mysite.finalProject.Service.ProductService;
-import com.mysite.finalProject.model.Product;
+import com.mysite.finalProject.dto.PostProductRequestDto;
+import com.mysite.finalProject.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("api/product")

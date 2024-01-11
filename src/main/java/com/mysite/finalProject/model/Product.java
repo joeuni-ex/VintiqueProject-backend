@@ -1,6 +1,6 @@
 package com.mysite.finalProject.model;
 
-import com.mysite.finalProject.Dto.PostProductRequestDto;
+import com.mysite.finalProject.dto.PostProductRequestDto;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,7 +8,6 @@ import org.hibernate.annotations.ColumnDefault;
 
 import java.text.SimpleDateFormat;
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 

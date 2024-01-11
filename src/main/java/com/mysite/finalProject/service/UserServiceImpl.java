@@ -1,4 +1,4 @@
-package com.mysite.finalProject.Service;
+package com.mysite.finalProject.service;
 
 import com.mysite.finalProject.model.Role;
 import com.mysite.finalProject.model.User;
