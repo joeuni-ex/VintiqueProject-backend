@@ -16,6 +16,7 @@ public class PostProductRequestDto {
     private String description;
     private String category;
     private Integer price;
+    private Integer stock;
     private List<String> boardImageList;
 
 

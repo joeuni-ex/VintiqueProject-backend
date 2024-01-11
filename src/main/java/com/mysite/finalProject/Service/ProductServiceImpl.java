@@ -25,7 +25,7 @@ public class ProductServiceImpl implements ProductService {
         Product product = new Product(dto);
 
         Long productNumber = product.getId();
-        System.out.println(product.getName());
+        //System.out.println(product.getName());
         List<String> boardImageList = dto.getBoardImageList();
         List<Image> imageEntities = new ArrayList<>();
 

@@ -34,6 +34,9 @@ public class Product {
     @Column(name = "price", nullable = false)
     private Integer price;
 
+    @Column(name = "stock", nullable = false)
+    private Integer stock;
+
     @Column(name ="favorite_count", nullable = false)
     @ColumnDefault("0")
     private Integer favoriteCount;
@@ -57,6 +60,7 @@ public class Product {
         this.description = dto.getDescription();
         this.category = dto.getCategory();
         this.price = dto.getPrice();
+        this.stock = dto.getStock();
         this.favoriteCount = 0;
         this.reviewCount =0 ;
         this.createTime = createDateTime;

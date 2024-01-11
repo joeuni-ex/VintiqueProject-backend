@@ -19,8 +19,8 @@ public class ProductController {
     //제품 추가하기
     @PostMapping
     public ResponseEntity<Object> saveProduct(@RequestBody PostProductRequestDto product){
-        System.out.println(product.getBoardImageList());
-        System.out.println(product.getBoardImageList());
+//        System.out.println(product.getBoardImageList());
+//        System.out.println(product.getBoardImageList());
 
         return new ResponseEntity<>(productService.saveProduct(product), HttpStatus.CREATED);
     }
