@@ -23,6 +23,7 @@ public class ProductServiceImpl implements ProductService {
     public Product saveProduct(PostProductRequestDto dto){
 
         Product product = new Product(dto);
+        product = productRepository.save(product);
 
         Long productNumber = product.getId();
         //System.out.println(product.getName());
@@ -35,7 +36,7 @@ public class ProductServiceImpl implements ProductService {
         }
 
         imageRepository.saveAll(imageEntities);
-        return productRepository.save(product);
+        return product;
     }
 
     //제품 삭제하기
