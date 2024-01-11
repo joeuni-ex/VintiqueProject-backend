@@ -36,6 +36,9 @@ public class Product {
     @Column(name = "stock", nullable = false)
     private Integer stock;
 
+    @Column(name = "main-image", nullable = false)
+    private String mainImage;
+
     @Column(name ="favorite_count", nullable = false)
     @ColumnDefault("0")
     private Integer favoriteCount;
@@ -54,12 +57,13 @@ public class Product {
         Date now = Date.from(Instant.now());
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
         String createDateTime = simpleDateFormat.format(now);
-        this.id= 1L;
+//        this.id= 1L;
         this.name = dto.getName();
         this.description = dto.getDescription();
         this.category = dto.getCategory();
         this.price = dto.getPrice();
         this.stock = dto.getStock();
+        this.mainImage = dto.getMainImage();
         this.favoriteCount = 0;
         this.reviewCount =0 ;
         this.createTime = createDateTime;
