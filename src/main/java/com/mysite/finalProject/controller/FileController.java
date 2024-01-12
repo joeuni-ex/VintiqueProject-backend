@@ -16,7 +16,7 @@ public class FileController {
 
 
     //이미지 업로드하기
-    @PostMapping("/upload")
+    @PostMapping( value = "/upload")
     public String upload(
             @RequestParam("file")MultipartFile file
             ){
