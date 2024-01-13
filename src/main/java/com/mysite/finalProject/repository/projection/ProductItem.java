@@ -12,7 +12,7 @@ public interface ProductItem {
      Integer getStock();
      String getMainImage();
      List<String> getBoardImageList();
-//     int getFavoriteCount();
-//     int getReviewCount();
+     int getFavoriteCount();
+     int getReviewCount();
      String getCreateTime();
 }
