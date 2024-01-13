@@ -17,16 +17,20 @@ public class ProductController {
     //제품 추가하기
     @PostMapping
     public ResponseEntity<Object> saveProduct(@RequestBody PostProductRequestDto product){
-//        System.out.println(product.getBoardImageList());
-//        System.out.println(product.getBoardImageList());
-
         return new ResponseEntity<>(productService.saveProduct(product), HttpStatus.CREATED);
     }
+
 
     //전체 제품 조회하기
     @GetMapping
     public ResponseEntity<Object> getAllProducts(){
         return new ResponseEntity<>(productService.findAllProducts(), HttpStatus.OK);
+    }
+
+    //제품 상세 조회하기
+    @GetMapping("{productId}")
+    public ResponseEntity<Object> getProduct(@PathVariable Long productId){
+        return new ResponseEntity<>(productService.findByIdProduct(productId), HttpStatus.OK);
     }
 
     //제품 삭제하기

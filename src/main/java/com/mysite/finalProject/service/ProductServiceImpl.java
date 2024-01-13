@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -51,4 +52,8 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findAll();
     }
 
+
+    @Override
+    //제품 상세 조회하기
+    public Optional<Product> findByIdProduct(Long id){return productRepository.findById(id); }
 }

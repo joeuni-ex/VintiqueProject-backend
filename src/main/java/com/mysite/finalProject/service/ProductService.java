@@ -4,6 +4,7 @@ import com.mysite.finalProject.dto.PostProductRequestDto;
 import com.mysite.finalProject.model.Product;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ProductService {
 
@@ -15,4 +16,7 @@ public interface ProductService {
 
     //모든 제품 조회하기
     List<Product> findAllProducts();
+
+    //제품 상세 조회하기
+    Optional<Product> findByIdProduct(Long id);
 }
