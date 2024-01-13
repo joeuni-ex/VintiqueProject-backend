@@ -5,12 +5,12 @@ import com.mysite.finalProject.model.Image;
 import com.mysite.finalProject.model.Product;
 import com.mysite.finalProject.repository.ImageRepository;
 import com.mysite.finalProject.repository.ProductRepository;
+import com.mysite.finalProject.repository.projection.ProductItem;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,6 +18,8 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
     private final ImageRepository imageRepository;
+
+
 
     //제품 저장하기
     @Override
@@ -55,5 +57,10 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     //제품 상세 조회하기
-    public Optional<Product> findByIdProduct(Long id){return productRepository.findById(id); }
+    public List<ProductItem> findByIdProduct(Long id){
+
+        return productRepository.findByIdImageOfProduct(id);
+    }
+
+
 }
