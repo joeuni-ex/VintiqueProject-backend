@@ -6,6 +6,7 @@ import com.mysite.finalProject.model.Product;
 import com.mysite.finalProject.repository.ImageRepository;
 import com.mysite.finalProject.repository.ProductRepository;
 import com.mysite.finalProject.repository.projection.ProductItem;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
@@ -45,6 +47,7 @@ public class ProductServiceImpl implements ProductService {
     //제품 삭제하기
     @Override
     public void deleteProduct(Long id){
+        imageRepository.deleteByProductId(id);
         productRepository.deleteById(id);
     }
 
