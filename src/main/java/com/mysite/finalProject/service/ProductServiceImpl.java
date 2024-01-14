@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -31,7 +32,7 @@ public class ProductServiceImpl implements ProductService {
         product = productRepository.save(product);
 
         Long productNumber = product.getId();
-        //System.out.println(product.getName());
+
         List<String> boardImageList = dto.getBoardImageList();
         List<Image> imageEntities = new ArrayList<>();
 
@@ -44,18 +45,14 @@ public class ProductServiceImpl implements ProductService {
         return product;
     }
 
-    //제품 삭제하기
-    @Override
-    public void deleteProduct(Long id){
-        imageRepository.deleteByProductId(id);
-        productRepository.deleteById(id);
-    }
+
 
     //모든 제품 조회하기
     @Override
     public List<Product> findAllProducts(){
         return productRepository.findAll();
     }
+
 
 
     @Override
@@ -66,4 +63,69 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
+    @Override
+    //제품 수정하기
+    public Optional<Product> modifyProduct(Long id, PostProductRequestDto dto){
+        // 일단 id에 맞는 값들을 가져옴
+        Optional<Product> entity = this.productRepository.findById(id);
+
+        entity.ifPresent(t->{
+
+            if(dto.getName() !=null){
+                t.setName(dto.getName());
+            }
+            if(dto.getPrice() !=null){
+                t.setPrice(dto.getPrice());
+            }
+            if(dto.getStock() !=null){
+                t.setStock(dto.getStock());
+            }
+            if(dto.getDescription() !=null){
+                t.setDescription(dto.getDescription());
+            }
+            if(dto.getMainImage() !=null){
+                t.setMainImage(dto.getMainImage());
+            }
+
+            this.productRepository.save(t);
+          }
+        );
+
+        // Get the existing images associated with the product
+        List<Image> existingImages = this.imageRepository.findByProductId(id);
+
+        // Get the list of new image URLs from the request
+        List<String> newBoardImageList = dto.getBoardImageList();
+
+        // Create a list to store the new Image entities
+        List<Image> newImages = new ArrayList<>();
+
+        // Update existing Image entities based on the new image URLs
+        if (newBoardImageList != null) {
+            for (int i = 0; i < Math.min(existingImages.size(), newBoardImageList.size()); i++) {
+                Image existingImage = existingImages.get(i);
+                String newImageUrl = newBoardImageList.get(i);
+                existingImage.setImage(newImageUrl);
+                this.imageRepository.save(existingImage);
+            }
+        }
+
+        // Create and save new Image entities for additional images
+        for (int i = existingImages.size(); i < newBoardImageList.size(); i++) {
+            String newImageUrl = newBoardImageList.get(i);
+            Image newImageEntity = new Image(id, newImageUrl);
+            this.imageRepository.save(newImageEntity);
+        }
+
+
+        return entity;
+    }
+
+
+    //제품 삭제하기
+    @Override
+    public void deleteProduct(Long id){
+        imageRepository.deleteByProductId(id);
+        productRepository.deleteById(id);
+    }
 }

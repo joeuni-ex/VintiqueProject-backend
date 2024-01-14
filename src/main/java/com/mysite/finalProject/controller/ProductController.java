@@ -33,9 +33,15 @@ public class ProductController {
         return new ResponseEntity<>(productService.findByIdProduct(productId), HttpStatus.OK);
     }
 
+    
+    //제품 수정하기
+    @PutMapping("{productId}")
+    public ResponseEntity<Object> modifyProduct(@PathVariable Long productId, @RequestBody PostProductRequestDto product){
+        return new ResponseEntity<>(productService.modifyProduct(productId,product), HttpStatus.CREATED);
+    }
 
     //제품 삭제하기
-    @DeleteMapping("{productId}")
+    @DeleteMapping("{productId} ")
     public ResponseEntity<Object> deleteProduct(@PathVariable  Long productId){
         productService.deleteProduct(productId);
         return new ResponseEntity<>(HttpStatus.OK);

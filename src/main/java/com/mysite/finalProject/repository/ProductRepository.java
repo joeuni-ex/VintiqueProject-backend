@@ -1,6 +1,7 @@
 package com.mysite.finalProject.repository;
 
 
+import com.mysite.finalProject.dto.PostProductRequestDto;
 import com.mysite.finalProject.model.Product;
 import com.mysite.finalProject.repository.projection.ProductItem;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -25,5 +26,6 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
             "from product prd left join image img on prd.id = img.productId " +
             "where img.productId = :productId" )
     List<ProductItem> findByIdImageOfProduct(@Param("productId") Long productId);
+
 
 }
