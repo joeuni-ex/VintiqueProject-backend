@@ -19,11 +19,8 @@ public interface ProductService {
     //제품 삭제하기
     void deleteProduct(Long id);
 
-    //모든 제품 조회하기
-    List<Product> findAllProducts();
-
-
-    Page<Product> findAll(int page);
+    //모든 제품 조회하기(페이징 처리) -> 게시판 용
+    Page<Product> findAll(int page, int maxPageSize);
 
     //제품 상세 조회하기
     List<ProductItem> findByIdProduct(Long id);

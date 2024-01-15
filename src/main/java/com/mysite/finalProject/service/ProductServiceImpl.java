@@ -50,16 +50,10 @@ public class ProductServiceImpl implements ProductService {
 
 
 
-    //모든 제품 조회하기
-    @Override
-    public List<Product> findAllProducts(){
-        return productRepository.findAll();
-    }
-
     //모든 제품 조회하기(페이징 처리)
     @Override
-    public Page<Product> findAll(int page){
-        Pageable pageable = PageRequest.of(page, 5); //한 페이지에 10개
+    public Page<Product> findAll(int page, int maxPageSize){
+        Pageable pageable = PageRequest.of(page, maxPageSize); //한 페이지에 10개
         return productRepository.findAll(pageable);
     }
 
