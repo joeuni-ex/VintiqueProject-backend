@@ -17,15 +17,19 @@ public class ProductController {
     //제품 추가하기
     @PostMapping
     public ResponseEntity<Object> saveProduct(@RequestBody PostProductRequestDto product){
+
+//        for(int i =1;i<=20; i++){
+//        }
         return new ResponseEntity<>(productService.saveProduct(product), HttpStatus.CREATED);
     }
 
 
     //전체 제품 조회하기
     @GetMapping
-    public ResponseEntity<Object> getAllProducts(){
-        return new ResponseEntity<>(productService.findAllProducts(), HttpStatus.OK);
+    public ResponseEntity<Object> getAllProducts(@RequestParam(value = "page",defaultValue = "0") int page){
+        return new ResponseEntity<>(productService.findAll(page), HttpStatus.OK);
     }
+
 
     //제품 상세 조회하기
     @GetMapping("{productId}")

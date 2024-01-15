@@ -3,6 +3,7 @@ package com.mysite.finalProject.service;
 import com.mysite.finalProject.dto.PostProductRequestDto;
 import com.mysite.finalProject.model.Product;
 import com.mysite.finalProject.repository.projection.ProductItem;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +22,8 @@ public interface ProductService {
     //모든 제품 조회하기
     List<Product> findAllProducts();
 
+
+    Page<Product> findAll(int page);
 
     //제품 상세 조회하기
     List<ProductItem> findByIdProduct(Long id);

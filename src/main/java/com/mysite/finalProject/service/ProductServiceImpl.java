@@ -8,6 +8,9 @@ import com.mysite.finalProject.repository.ProductRepository;
 import com.mysite.finalProject.repository.projection.ProductItem;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -53,7 +56,12 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findAll();
     }
 
-
+    //모든 제품 조회하기(페이징 처리)
+    @Override
+    public Page<Product> findAll(int page){
+        Pageable pageable = PageRequest.of(page, 5); //한 페이지에 10개
+        return productRepository.findAll(pageable);
+    }
 
     @Override
     //제품 상세 조회하기
