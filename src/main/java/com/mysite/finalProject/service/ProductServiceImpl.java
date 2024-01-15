@@ -57,6 +57,15 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findAll(pageable);
     }
 
+    //카테고리 별 제품 조회하기(페이징 처리)
+    @Override
+    public Page<Product> findByCategory(int page, int maxPageSize,String category){
+        Pageable pageable = PageRequest.of(page, maxPageSize); //한 페이지에 10개
+        return productRepository.findByCategory(pageable,category);
+    }
+
+
+
     @Override
     //제품 상세 조회하기
     public List<ProductItem> findByIdProduct(Long id){

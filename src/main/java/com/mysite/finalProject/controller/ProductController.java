@@ -24,7 +24,7 @@ public class ProductController {
     }
 
 
-    //전체 제품 조회하기 (페이징 추가) )
+    //전체 제품 조회하기 (페이징 추가)
     @GetMapping
     public ResponseEntity<Object> getAllProducts(@RequestParam(value = "page",defaultValue = "0") int page , @RequestParam(value = "maxpage",defaultValue = "5") int maxPageSize){
         return new ResponseEntity<>(productService.findAll(page,maxPageSize), HttpStatus.OK);

@@ -29,5 +29,8 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
             "where img.productId = :productId" )
     List<ProductItem> findByIdImageOfProduct(@Param("productId") Long productId);
 
+    //전체 제품 조회 페이지네이션 적용
     Page<Product> findAll (Pageable pageable);
+
+    Page<Product> findByCategory(Pageable pageable, String category);
 }
