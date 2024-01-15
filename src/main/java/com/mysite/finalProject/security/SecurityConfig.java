@@ -46,8 +46,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests((auth) -> auth
                         .requestMatchers("/api/authentication/**").permitAll()//로그인 ,로그아웃 허가한다.
                         .requestMatchers(HttpMethod.GET,"/api/user/checkuser").permitAll()//유저 중복확인은 허가한다.
-                        .requestMatchers(HttpMethod.GET,"/api/product").permitAll()//전체 제품 조회 (get)은 인증 필요없음
-                        .requestMatchers("/api/product/**").hasRole(Role.ADMIN.name())// 그 외 product 접근은 관리자 권한만 가능함
+                        .requestMatchers(HttpMethod.GET,"/api/product/**").permitAll()//전체 제품 조회 / 상세조회 (get)은 인증 필요없음
+//                        .requestMatchers("/api/product/**").hasRole(Role.ADMIN.name())// 그 외 product 접근은 관리자 권한만 가능함
                         .requestMatchers("/file/**").permitAll()// 그 외 product 접근은 관리자 권한만 가능함
                         .anyRequest().authenticated()//그 외의 접근은 인증이 필요하다.
                 ).addFilterBefore(jwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
