@@ -91,27 +91,44 @@ public class ProductServiceImpl implements ProductService {
           }
         );
 
-        // Get the existing images associated with the product
+        // 제품 id에 해당하는 이미지들 가져오기
         List<Image> existingImages = this.imageRepository.findByProductId(id);
 
-        // Get the list of new image URLs from the request
+        // 수정할 사이드 이미지들을 빈 리스트에 담음
         List<String> newBoardImageList = dto.getBoardImageList();
 
-        // Create a list to store the new Image entities
-        List<Image> newImages = new ArrayList<>();
-
-        // Update existing Image entities based on the new image URLs
-        if (newBoardImageList != null) {
-            for (int i = 0; i < Math.min(existingImages.size(), newBoardImageList.size()); i++) {
+        //수정할 이미지 개수가 기존의 개수보다 작을 경우, 초과하는 이미지는 삭제한다.
+        if (existingImages.size() > newBoardImageList.size()) {
+            for (int i = newBoardImageList.size(); i < existingImages.size(); i++) {
                 Image existingImage = existingImages.get(i);
-                String newImageUrl = newBoardImageList.get(i);
-                existingImage.setImage(newImageUrl);
+                this.imageRepository.delete(existingImage);
+            }
+        }
+
+        //수정할 이미지 리스트가 공백이 아닐 경우에 실행함
+        if (newBoardImageList != null) {
+
+            //기존 이미지 개수와 수정할 이미지 개수 중 작은 개수 만큼 반복문 실행
+            for (int i = 0; i < Math.min(existingImages.size(), newBoardImageList.size()); i++) {
+                Image existingImage = existingImages.get(i); // 기존 이미지 리스트 중 i번째 사진을 가져옴
+
+                System.out.println("기존의 이미지 :" +  existingImage);
+
+                String newImageUrl = newBoardImageList.get(i);// 수정할 이미지 리스트 중 i번째 사진을 가져옴
+
+                System.out.println("수정할 이미지 :" + newImageUrl);
+
+
+                existingImage.setImage(newImageUrl);//교환한다.
+
+                System.out.println("최종 이미지 :" +existingImage);
+
                 this.imageRepository.save(existingImage);
             }
         }
 
-        // Create and save new Image entities for additional images
-        for (int i = existingImages.size(); i < newBoardImageList.size(); i++) {
+        // 만약 수정하는 이미지 개수가 기존 업로드 된 이미지 개수보다 많을 때
+        for (int i = existingImages.size(); i < newBoardImageList.size(); i++) { //이미 생성된 이미지의 개수부터 새로운 이미지 리스트 개수까지 반복
             String newImageUrl = newBoardImageList.get(i);
             Image newImageEntity = new Image(id, newImageUrl);
             this.imageRepository.save(newImageEntity);
