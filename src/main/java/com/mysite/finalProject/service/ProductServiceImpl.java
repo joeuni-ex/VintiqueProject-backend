@@ -30,20 +30,23 @@ public class ProductServiceImpl implements ProductService {
     //제품 저장하기
     @Override
     public Product saveProduct(PostProductRequestDto dto){
-
+        //제품 추가 요청으로 받아온 dto를 repository를 통해 db에 저장한다.
         Product product = new Product(dto);
         product = productRepository.save(product);
 
+        //제품 생성 시 자동으로 생성되는 id를 가져온다.
         Long productNumber = product.getId();
 
+        //이미지 리스트는 빈 배열에 넣는다
         List<String> boardImageList = dto.getBoardImageList();
         List<Image> imageEntities = new ArrayList<>();
-
+        //이미지 리스트의 크기만큼 반복문을 실횅한다.
         for (String image : boardImageList){
+            //Image 객체에 제품 id와 이미지를 저장하고 배열에 추가한다.
             Image imageEntity = new Image(productNumber,image);
             imageEntities.add(imageEntity);
         }
-
+        // 모든 이미지를 db에 저장한다.
         imageRepository.saveAll(imageEntities);
         return product;
     }

@@ -59,7 +59,6 @@ public class Product {
         Date now = Date.from(Instant.now());
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
         String createDateTime = simpleDateFormat.format(now);
-//        this.id= 1L;
         this.name = dto.getName();
         this.description = dto.getDescription();
         this.category = dto.getCategory();
