@@ -1,0 +1,14 @@
+package com.mysite.finalProject.service;
+
+import com.mysite.finalProject.dto.CartCreateRequestDto;
+import com.mysite.finalProject.model.Cart;
+import com.mysite.finalProject.model.CartItem;
+import com.mysite.finalProject.model.Product;
+import com.mysite.finalProject.model.User;
+
+import java.util.List;
+
+public interface CartService {
+
+    void create(CartCreateRequestDto req, User user);
+}
