@@ -2,6 +2,7 @@ package com.mysite.finalProject.model;
 
 import com.mysite.finalProject.dto.PostProductRequestDto;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
@@ -15,6 +16,7 @@ import java.util.Date;
 @Entity(name = "product")
 @Table(name = "product")
 @NoArgsConstructor
+@AllArgsConstructor
 public class Product {
 
     @Id

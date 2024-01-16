@@ -1,6 +1,7 @@
 package com.mysite.finalProject.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -8,6 +9,7 @@ import lombok.NoArgsConstructor;
 @Entity(name = "image")
 @Table(name = "image")
 @NoArgsConstructor
+@AllArgsConstructor
 public class Image {
 
     @Id
