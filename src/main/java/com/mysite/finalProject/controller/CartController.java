@@ -38,7 +38,6 @@ public class CartController {
 
     // 장바구니 조회
     @GetMapping
-    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Object> findAll() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findByUsername(authentication.getName()).orElseThrow();
@@ -47,5 +46,12 @@ public class CartController {
         return new ResponseEntity<>(cartService.findAll(user), HttpStatus.CREATED);
     }
 
-
+    //장바구니 품목 삭제
+    @DeleteMapping("/{cartItemId}")
+    public ResponseEntity<Object> deleteById(@PathVariable("cartItemId") Long id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByUsername(authentication.getName()).orElseThrow();
+        cartService.deleteById(id, user);
+        return  new ResponseEntity<>(HttpStatus.OK);
+    }
 }

@@ -30,7 +30,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public void create(CartCreateRequestDto req, User user) {
-        Product product = productRepository.findById(req.getProduct_id()).orElseThrow();
+        Product product = productRepository.findById(req.getProductId()).orElseThrow();
 
 //        if (product.getQuantity() < req.getQuantity()) {
 //            throw new LakingOfProductQuantity();
@@ -70,4 +70,16 @@ public class CartServiceImpl implements CartService {
     }
 
 
+    @Override
+    //장바구니 삭제하기
+    public void deleteById(Long id, User user) {
+        CartItem cartItem = cartItemRepository.findById(id).orElseThrow();
+        Cart cart = cartItem.getCart();
+
+        if (!cart.getUser().equals(user)) {
+            System.out.println( "오류발생");
+        }
+
+        cartItemRepository.delete(cartItem);
+    }
 }

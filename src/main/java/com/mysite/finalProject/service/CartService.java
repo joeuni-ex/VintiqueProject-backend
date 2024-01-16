@@ -14,4 +14,7 @@ public interface CartService {
     void create(CartCreateRequestDto req, User user);
 
     List<CartItemResponseDto> findAll(User user);
+
+    //장바구니 삭제하기
+    void deleteById(Long id, User user);
 }

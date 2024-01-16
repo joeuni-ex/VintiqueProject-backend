@@ -11,7 +11,7 @@ public class CartCreateRequestDto {
 
 
     @NotNull(message = "상품 번호를 입력하세요.")
-    private Long product_id;
+    private Long productId;
 
     @NotNull(message = "구매 수량을 입력하세요.")
     private Integer quantity;
