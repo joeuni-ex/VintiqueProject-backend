@@ -63,7 +63,7 @@ public class CartServiceImpl implements CartService {
 
         for(CartItem item : items) {
             Product product = item.getProduct();
-            result.add(new CartItemResponseDto().toDto(item, product.getName(), product.getPrice()));
+            result.add(new CartItemResponseDto().toDto(item, product.getName(), product.getPrice(),product.getMainImage()));
         }
         System.out.println(result);
         return result;

@@ -15,7 +15,8 @@ public class CartItemResponseDto {
     private String name;
     private Integer InsertQuantity;
     private Integer price;
-    public static CartItemResponseDto toDto(CartItem cartItem, String name, int price) {
-        return new CartItemResponseDto(cartItem.getId(), name, cartItem.getQuantity(), price);
+    private String mainImage;
+    public static CartItemResponseDto toDto(CartItem cartItem, String name, int price ,String mainImage) {
+        return new CartItemResponseDto(cartItem.getId(), name, cartItem.getQuantity(), price, mainImage);
     }
 }
