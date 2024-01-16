@@ -2,6 +2,7 @@ package com.mysite.finalProject.service;
 
 
 import com.mysite.finalProject.dto.CartCreateRequestDto;
+import com.mysite.finalProject.dto.CartItemResponseDto;
 import com.mysite.finalProject.model.Cart;
 import com.mysite.finalProject.model.CartItem;
 import com.mysite.finalProject.model.Product;
@@ -12,6 +13,9 @@ import com.mysite.finalProject.repository.ProductRepository;
 import com.mysite.finalProject.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -46,6 +50,24 @@ public class CartServiceImpl implements CartService {
         cartItemRepository.save(cartItem);
     }
 
+
+
+    // 유저 별 장바구니 조회하기
+    @Override
+    public List<CartItemResponseDto> findAll(User user) {
+        Cart cart = cartRepository.findByUserId(user.getId());
+        System.out.println(cart);
+
+        List<CartItem> items = cartItemRepository.findAllByCart(cart);
+        List<CartItemResponseDto> result = new ArrayList<>();
+
+        for(CartItem item : items) {
+            Product product = item.getProduct();
+            result.add(new CartItemResponseDto().toDto(item, product.getName(), product.getPrice()));
+        }
+        System.out.println(result);
+        return result;
+    }
 
 
 }

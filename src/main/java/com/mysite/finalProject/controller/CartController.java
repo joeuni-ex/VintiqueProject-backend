@@ -26,14 +26,26 @@ public class CartController {
     private final UserRepository userRepository;
 
     // 장바구니 담기
-    @PostMapping()
-    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping
     public ResponseEntity<Object> create( @RequestBody CartCreateRequestDto req ) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findByUsername(authentication.getName()).orElseThrow();
         cartService.create(req, user);
 
-        return ResponseEntity.ok(true);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+
+    // 장바구니 조회
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Object> findAll() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByUsername(authentication.getName()).orElseThrow();
+        System.out.println(user);
+
+        return new ResponseEntity<>(cartService.findAll(user), HttpStatus.CREATED);
+    }
+
 
 }

@@ -1,6 +1,7 @@
 package com.mysite.finalProject.service;
 
 import com.mysite.finalProject.dto.CartCreateRequestDto;
+import com.mysite.finalProject.dto.CartItemResponseDto;
 import com.mysite.finalProject.model.Cart;
 import com.mysite.finalProject.model.CartItem;
 import com.mysite.finalProject.model.Product;
@@ -11,4 +12,6 @@ import java.util.List;
 public interface CartService {
 
     void create(CartCreateRequestDto req, User user);
+
+    List<CartItemResponseDto> findAll(User user);
 }
