@@ -13,8 +13,17 @@ public interface PurchaseRepository extends JpaRepository<Purchase,Long> {
     //유저의 구매 제품 모두를 조회함 .
     //가져올 때는 프로젝션을 사용해서 데이터(제품 이름,가격,구매시간) 가져옴
     @Query("select " +
+            "prd.id as productId ,pur.userId as userId ,prd.mainImage as mainImage ," +
             "prd.name as name, pur.price as price, pur.purchaseTime as purchaseTime " +
             "from Purchase pur left join Product prd on prd.id = pur.productId " +
             "where pur.userId = :userId" )
     List<PurchaseItem> findAllPurchasesOfUser(@Param("userId") Long userId);
+
+    @Query("select " +
+            "prd.id as productId ,pur.userId as userId ,prd.mainImage as mainImage ," +
+            "prd.name as name, pur.price as price, pur.purchaseTime as purchaseTime " +
+            "from Purchase pur left join Product prd on prd.id = pur.productId "
+             )
+    List<PurchaseItem> findAllPurchase();
+
 }

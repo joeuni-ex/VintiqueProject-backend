@@ -11,4 +11,8 @@ public interface PurchaseService {
 
     //모든 구매내역 가져오기
     List<PurchaseItem> findPurchaseItemsOfUser(Long userId);
+
+
+    //모든 구매내역 가져오기
+    List<PurchaseItem> findAllPurchase();
 }

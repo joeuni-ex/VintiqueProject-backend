@@ -24,9 +24,17 @@ public class PurchaseController {
         return new ResponseEntity<>(purchaseService.savePurchase(purchase), HttpStatus.OK);
     }
 
-    // 전체 유저별 구매 목록 가져오기
+    // 유저별 구매 목록 가져오기
     @GetMapping
     public ResponseEntity<Object> getAllPurchaseOfUser(@AuthenticationPrincipal UserPrinciple userPrinciple){
         return ResponseEntity.ok(purchaseService.findPurchaseItemsOfUser(userPrinciple.getId()));
+    }
+
+
+
+    // 전체 구매 목록 가져오기(관리자용)
+    @GetMapping("/all")
+    public ResponseEntity<Object> getAllPurchase(){
+        return ResponseEntity.ok(purchaseService.findAllPurchase());
     }
 }
