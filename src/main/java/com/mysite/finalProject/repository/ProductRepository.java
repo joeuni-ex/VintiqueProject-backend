@@ -25,7 +25,7 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
             "prd.reviewCount as reviewCount, " +
             "img.image as boardImageList, " +
             "prd.createTime as createTime " +
-            "from product prd left join image img on prd.id = img.productId " +
+            "from Product prd left join Image img on prd.id = img.productId " +
             "where img.productId = :productId" )
     List<ProductItem> findByIdImageOfProduct(@Param("productId") Long productId);
 

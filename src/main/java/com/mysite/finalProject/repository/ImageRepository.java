@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface ImageRepository extends JpaRepository<Image, Long> {
     @Modifying
     @Query("delete " +
-            "from image " +
+            "from Image " +
             "where productId = :productId")
     void deleteByProductId(@Param("productId") Long productId);
 
