@@ -2,6 +2,8 @@ package com.mysite.finalProject.repository;
 
 import com.mysite.finalProject.model.Purchase;
 import com.mysite.finalProject.repository.projection.PurchaseItem;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -17,13 +19,13 @@ public interface PurchaseRepository extends JpaRepository<Purchase,Long> {
             "prd.name as name, pur.price as price, pur.purchaseTime as purchaseTime " +
             "from Purchase pur left join Product prd on prd.id = pur.productId " +
             "where pur.userId = :userId" )
-    List<PurchaseItem> findAllPurchasesOfUser(@Param("userId") Long userId);
+    Page<PurchaseItem> findAllPurchasesOfUser(Pageable pageable ,@Param("userId") Long userId);
 
     @Query("select " +
             "prd.id as productId ,pur.userId as userId ,prd.mainImage as mainImage ," +
             "prd.name as name, pur.price as price, pur.purchaseTime as purchaseTime " +
             "from Purchase pur left join Product prd on prd.id = pur.productId "
              )
-    List<PurchaseItem> findAllPurchase();
+    Page<PurchaseItem> findAllPurchase(Pageable pageable);
 
 }

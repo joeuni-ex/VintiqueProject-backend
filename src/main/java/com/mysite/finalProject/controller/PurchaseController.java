@@ -26,15 +26,15 @@ public class PurchaseController {
 
     // 유저별 구매 목록 가져오기
     @GetMapping
-    public ResponseEntity<Object> getAllPurchaseOfUser(@AuthenticationPrincipal UserPrinciple userPrinciple){
-        return ResponseEntity.ok(purchaseService.findPurchaseItemsOfUser(userPrinciple.getId()));
+    public ResponseEntity<Object> getAllPurchaseOfUser(@RequestParam(value = "page",defaultValue = "0") int page , @RequestParam(value = "maxpage",defaultValue = "5") int maxPageSize,@AuthenticationPrincipal UserPrinciple userPrinciple){
+        return ResponseEntity.ok(purchaseService.findPurchaseItemsOfUser(page,maxPageSize,userPrinciple.getId()));
     }
 
 
 
     // 전체 구매 목록 가져오기(관리자용)
     @GetMapping("/all")
-    public ResponseEntity<Object> getAllPurchase(){
-        return ResponseEntity.ok(purchaseService.findAllPurchase());
+    public ResponseEntity<Object> getAllPurchase(@RequestParam(value = "page",defaultValue = "0") int page , @RequestParam(value = "maxpage",defaultValue = "5") int maxPageSize){
+        return ResponseEntity.ok(purchaseService.findAllPurchase(page,maxPageSize));
     }
 }
