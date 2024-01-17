@@ -18,10 +18,10 @@ public class ProductController {
     @PostMapping
     public ResponseEntity<Object> saveProduct(@RequestBody PostProductRequestDto product){
 
-//        for(int i =1;i<=20; i++){
-//            productService.saveProduct(product);
-//        }
-        return new ResponseEntity<>( productService.saveProduct(product),HttpStatus.CREATED);
+        for(int i =1;i<=20; i++){
+            productService.saveProduct(product);
+        }
+        return new ResponseEntity<>(  HttpStatus.CREATED);
     }
 
 

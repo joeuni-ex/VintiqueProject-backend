@@ -41,7 +41,6 @@ public class CartController {
     public ResponseEntity<Object> findAll() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findByUsername(authentication.getName()).orElseThrow();
-        System.out.println(user);
 
         return new ResponseEntity<>(cartService.findAll(user), HttpStatus.CREATED);
     }

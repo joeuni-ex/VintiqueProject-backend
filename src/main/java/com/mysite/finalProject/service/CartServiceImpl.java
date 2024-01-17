@@ -32,12 +32,6 @@ public class CartServiceImpl implements CartService {
     public void create(CartCreateRequestDto req, User user) {
         Product product = productRepository.findById(req.getProductId()).orElseThrow();
 
-//        if (product.getQuantity() < req.getQuantity()) {
-//            throw new LakingOfProductQuantity();
-//        }
-
-        // 3. 장바구니 만들어줘야한다 사용자한테
-
         if (cartRepository.findByUserId(user.getId()) == null) {
             // 장바구니가 없다면 생성
             Cart cart = new Cart(user);
@@ -56,7 +50,6 @@ public class CartServiceImpl implements CartService {
     @Override
     public List<CartItemResponseDto> findAll(User user) {
         Cart cart = cartRepository.findByUserId(user.getId());
-        System.out.println(cart);
 
         List<CartItem> items = cartItemRepository.findAllByCart(cart);
         List<CartItemResponseDto> result = new ArrayList<>();
@@ -65,7 +58,6 @@ public class CartServiceImpl implements CartService {
             Product product = item.getProduct();
             result.add(new CartItemResponseDto().toDto(item, product.getName(), product.getPrice(),product.getMainImage()));
         }
-        System.out.println(result);
         return result;
     }
 

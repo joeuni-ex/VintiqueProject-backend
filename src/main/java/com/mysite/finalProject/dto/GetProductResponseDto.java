@@ -26,10 +26,6 @@ public class GetProductResponseDto {
     private String createTime;
 
 
-    private GetProductResponseDto(){
-
-    }
-
     public static ResponseEntity<GetProductResponseDto> success(){
         GetProductResponseDto result = new GetProductResponseDto();
         return ResponseEntity.status(HttpStatus.OK).body(result);
