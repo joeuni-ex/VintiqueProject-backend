@@ -19,8 +19,8 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name ="count", nullable = false)
-    private int count; // 개수
+    @Column(name ="quantity", nullable = false)
+    private int quantity; // 개수
 
     @Column(name ="price", nullable = false)
     private int price; // 금액
@@ -36,11 +36,11 @@ public class OrderItem {
     private Product product; // 제품 연결
 
 
-    public static OrderItem createOrderItem(Product product, int count){
+    public static OrderItem createOrderItem(Product product, int quantity){
 
         OrderItem orderItem = new OrderItem();
         orderItem.setProduct(product);
-        orderItem.setCount(count);
+        orderItem.setQuantity(quantity);
         orderItem.setPrice(product.getPrice());
 
         return orderItem;

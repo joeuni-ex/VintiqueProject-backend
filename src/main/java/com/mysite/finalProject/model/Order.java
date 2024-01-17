@@ -25,7 +25,7 @@ public class Order {
     private Long id;
 
     @Column(name ="status", nullable = false)
-    private String status; // 상황
+    private String status; // 상태
 
     @Column(name ="total_price", nullable = false)
     private int totalPrice; // 총 금액
@@ -59,11 +59,13 @@ public class Order {
         return order;
     }
 
+
+    //주문 전체 금액 산정
     public int getTotalPrice(){
         int totalPrice = 0;
 
         for(OrderItem order_item : order_items){
-            totalPrice += (order_item.getPrice() * order_item.getCount());
+            totalPrice += (order_item.getPrice() * order_item.getQuantity());
         }
 
         return totalPrice;
