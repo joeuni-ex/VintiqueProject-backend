@@ -23,5 +23,7 @@ public interface OrderService {
     //유저 주문 상세 내용
     List<OrderViewResponseDto> orderView(Long id);
 
+
+    //수정
     void orderUpdate(Long id, Order order);
 }

@@ -95,7 +95,7 @@ public class OrderServiceImpl implements OrderService {
 
     //수정
     @Override
-    public void orderUpdate(Long id, Order order){
+    public void orderUpdate(Long id, Order order) {
         Order tempOrder = orderRepository.findById(id).get();
         tempOrder.setStatus(order.getStatus());
 
