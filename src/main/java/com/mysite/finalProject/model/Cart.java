@@ -25,7 +25,6 @@ public class Cart {
     @ToString.Exclude
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
     @OneToMany(fetch = FetchType.LAZY)
