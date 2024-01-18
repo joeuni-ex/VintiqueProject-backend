@@ -20,9 +20,9 @@ public class OrderController {
     private final OrderService orderService;
 
     //전체 주문 내역 가져오기
-    @GetMapping
-    public ResponseEntity<Object> myOrderPage(){
-        return new ResponseEntity<>( orderService.getAllOrders(),HttpStatus.OK);
+    @GetMapping("/all")
+    public ResponseEntity<Object> myOrderPage(@RequestParam(value = "page",defaultValue = "0") int page , @RequestParam(value = "maxpage",defaultValue = "5") int maxPageSize){
+        return new ResponseEntity<>( orderService.getAllOrders(page,maxPageSize),HttpStatus.OK);
     }
 
     //주문 하기

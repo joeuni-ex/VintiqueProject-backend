@@ -34,7 +34,6 @@ public class OrderItem {
 
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private Product product; // 제품 연결
 
 

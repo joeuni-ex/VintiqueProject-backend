@@ -3,6 +3,7 @@ package com.mysite.finalProject.service;
 import com.mysite.finalProject.dto.OrderResponseDto;
 import com.mysite.finalProject.model.Order;
 import com.mysite.finalProject.model.User;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ public interface OrderService {
 
 
     //전체 주문 내역 조회
-    List<OrderResponseDto> getAllOrders();
+    Page<OrderResponseDto> getAllOrders(int page, int maxPageSize);
 
     Order orderView(Long id);
 

@@ -6,14 +6,18 @@ import com.mysite.finalProject.repository.CartItemRepository;
 import com.mysite.finalProject.repository.CartRepository;
 import com.mysite.finalProject.repository.OrderItemRepository;
 import com.mysite.finalProject.repository.OrderRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
@@ -36,34 +40,34 @@ public class OrderServiceImpl implements OrderService {
     public void order(User user){
         List<OrderItem> order_items = new ArrayList<>(); // 주문내역에 추가할 아이템리스트
 
-        Cart cart = cartRepository.findByUserId(user.getId());
+        Cart cart = cartRepository.findByUserId(user.getId()); // 유저의 id로 카트 검색
 
-        List<CartItem> cartItems = cartItemRepository.findAllByCart(cart);
+        List<CartItem> cartItems = cartItemRepository.findAllByCart(cart); //해당 카트안에 있는 아이템 목록 가져옴
 
+        int cartItemCount = 0; // 카트 안의 목록 개수
 
         for(CartItem cart_item : cartItems){
             OrderItem order_item = OrderItem.createOrderItem(cart_item.getProduct(),cart_item.getQuantity());
             order_items.add(order_item);
+            cartItemCount = cartItemCount + 1;
         }
 
-        Order order = Order.createOrder(user,order_items);
-        order.setTotalPrice(order.getTotalPrice());
-        System.out.println(order.getTotalPrice());
+        Order order = Order.createOrder(user,order_items,cartItemCount); //카트 안의 개수
+        order.setTotalPrice(order.getTotalPrice());//총 금액
         orderRepository.save(order);
+
+        cartItemRepository.deleteByCartId(cart.getId()); //해당 유저의 카트안의 상품 삭제
+        cartRepository.deleteById(cart.getId());// 해당 카트 삭제
+
     }
 
 
-    //전체 주문 내역 조회
+    //전체 주문 내역 조회(페이징 추가)
     @Override
-    public List<OrderResponseDto> getAllOrders() {
-        List<OrderResponseDto> allOrder = new ArrayList<>(); // 주문내역에 추가할 아이템리스트
-        List<Order> orders = orderRepository.findAll();
-
-        for(Order order : orders){
-            OrderResponseDto order_item = OrderResponseDto.toDto(order);
-            allOrder.add(order_item);
-        }
-        return allOrder;
+    public Page<OrderResponseDto> getAllOrders(int page, int maxPageSize) {
+        Pageable pageable = PageRequest.of(page, maxPageSize); //maxPageSize -> 한 페이지에 출력할 게시글 개수
+        Page<Order> orders = orderRepository.findAll(pageable);
+        return orders.map(OrderResponseDto::toDto);
     }
 
     //유저 별 주문 내역 조회
