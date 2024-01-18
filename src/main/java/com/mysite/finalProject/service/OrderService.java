@@ -13,7 +13,7 @@ public interface OrderService {
 
 
     //전체 주문 내역 조회
-    List<OrderResponseDto> findAll();
+    List<OrderResponseDto> getAllOrders();
 
     Order orderView(Long id);
 

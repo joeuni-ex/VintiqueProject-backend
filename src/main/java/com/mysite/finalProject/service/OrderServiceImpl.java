@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -54,20 +55,16 @@ public class OrderServiceImpl implements OrderService {
 
     //전체 주문 내역 조회
     @Override
-    public List<OrderResponseDto> findAll() {
-        //Pageable pageable = PageRequest.of(page, maxPageSize); //maxPageSize -> 한 페이지에 출력할
-        System.out.println("아이템출력:");
+    public List<OrderResponseDto> getAllOrders() {
+        List<OrderResponseDto> allOrder = new ArrayList<>(); // 주문내역에 추가할 아이템리스트
+        List<Order> orders = orderRepository.findAll();
 
-        List<Order> items = orderRepository.findAll();
-        System.out.println("아이템출력:"+items);
-        List<OrderResponseDto> result = new ArrayList<>();
-
-        for(Order item : items) {
-            result.add(new OrderResponseDto().toDto(item));
+        for(Order order : orders){
+            OrderResponseDto order_item = OrderResponseDto.toDto(order);
+            allOrder.add(order_item);
         }
-        return result;
+        return allOrder;
     }
-
 
     //유저 별 주문 내역 조회
 

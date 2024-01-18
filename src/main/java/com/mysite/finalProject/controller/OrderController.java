@@ -22,7 +22,7 @@ public class OrderController {
     //전체 주문 내역 가져오기
     @GetMapping
     public ResponseEntity<Object> myOrderPage(){
-        return new ResponseEntity<>( orderService.findAll(),HttpStatus.OK);
+        return new ResponseEntity<>( orderService.getAllOrders(),HttpStatus.OK);
     }
 
     //주문 하기
