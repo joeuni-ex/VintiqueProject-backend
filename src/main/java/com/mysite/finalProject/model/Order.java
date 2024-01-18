@@ -11,8 +11,11 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -41,9 +44,11 @@ public class Order {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<OrderItem> order_items = new ArrayList<>();
 
+    @Column(name ="cart_item_count", nullable = false)
+    private int cartItemCount;
+
     @Column(name ="createDate", nullable = false)
-    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
-    private LocalDateTime createDate; // 날짜
+    private String createDate; // 날짜
 
 
     public void addOrderItem(OrderItem order_item){
@@ -51,14 +56,23 @@ public class Order {
         order_item.setOrder(this);
     }
 
-    public static Order createOrder(User user, List<OrderItem> orderItemList){
+    
+    //주문 저장
+    public static Order createOrder(User user, List<OrderItem> orderItemList ,int cartItemCount){
+        //날짜 포맷 설정
+        Date now = Date.from(Instant.now());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
+        String createDateTime = simpleDateFormat.format(now);
+
         Order order = new Order();
         order.setUser(user);
         for(OrderItem order_item : orderItemList){
             order.addOrderItem(order_item);
         }
         order.setStatus("주문 완료");
-        order.setCreateDate(LocalDateTime.now());
+        order.setCreateDate(createDateTime);
+        order.setCartItemCount(cartItemCount);
+
         return order;
     }
 
