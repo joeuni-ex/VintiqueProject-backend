@@ -46,7 +46,7 @@ public class ProductController {
     }
 
     //제품 삭제하기
-    @DeleteMapping("{productId} ")
+    @DeleteMapping("{productId}")
     public ResponseEntity<Object> deleteProduct(@PathVariable  Long productId){
         productService.deleteProduct(productId);
         return new ResponseEntity<>(HttpStatus.OK);
