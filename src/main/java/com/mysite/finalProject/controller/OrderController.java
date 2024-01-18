@@ -1,6 +1,8 @@
 package com.mysite.finalProject.controller;
 
 
+import com.mysite.finalProject.dto.PostProductRequestDto;
+import com.mysite.finalProject.model.Order;
 import com.mysite.finalProject.model.User;
 import com.mysite.finalProject.repository.UserRepository;
 import com.mysite.finalProject.service.OrderService;
@@ -31,10 +33,22 @@ public class OrderController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findByUsername(authentication.getName()).orElseThrow();
 
-        orderService.order(user);
-
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>( orderService.order(user),HttpStatus.CREATED);
     }
 
+    //주문 완료 -> 주문 상세 조회
+    @GetMapping("/success/{id}")
+    public ResponseEntity<Object> myOrderView(@PathVariable Long id){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByUsername(authentication.getName()).orElseThrow();
 
+        return new ResponseEntity<>( orderService.orderView(id),HttpStatus.CREATED);
+    }
+
+    //주문 상태 변경
+    @PutMapping("/change/status/{id}")
+    public ResponseEntity<Object> changeOrderStatus(@PathVariable Long id, @RequestBody Order order) {
+        orderService.orderUpdate(id,order);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

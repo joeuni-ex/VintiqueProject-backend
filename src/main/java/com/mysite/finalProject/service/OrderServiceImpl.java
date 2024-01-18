@@ -1,6 +1,7 @@
 package com.mysite.finalProject.service;
 
 import com.mysite.finalProject.dto.OrderResponseDto;
+import com.mysite.finalProject.dto.OrderViewResponseDto;
 import com.mysite.finalProject.model.*;
 import com.mysite.finalProject.repository.CartItemRepository;
 import com.mysite.finalProject.repository.CartRepository;
@@ -37,7 +38,7 @@ public class OrderServiceImpl implements OrderService {
 
     //주문 하기
     @Override
-    public void order(User user){
+    public Long order(User user){
         List<OrderItem> order_items = new ArrayList<>(); // 주문내역에 추가할 아이템리스트
 
         Cart cart = cartRepository.findByUserId(user.getId()); // 유저의 id로 카트 검색
@@ -59,6 +60,7 @@ public class OrderServiceImpl implements OrderService {
         cartItemRepository.deleteByCartId(cart.getId()); //해당 유저의 카트안의 상품 삭제
         cartRepository.deleteById(cart.getId());// 해당 카트 삭제
 
+        return  order.getId();
     }
 
 
@@ -67,17 +69,31 @@ public class OrderServiceImpl implements OrderService {
     public Page<OrderResponseDto> getAllOrders(int page, int maxPageSize) {
         Pageable pageable = PageRequest.of(page, maxPageSize); //maxPageSize -> 한 페이지에 출력할 게시글 개수
         Page<Order> orders = orderRepository.findAll(pageable);
+
+
         return orders.map(OrderResponseDto::toDto);
     }
 
-    //유저 별 주문 내역 조회
 
 
+
+
+    //유저 주문 상세 내용
     @Override
-    public Order orderView(Long id){
-        return orderRepository.findById(id).get();
+    public List<OrderViewResponseDto> orderView(Long id){
+       List<OrderItem>  items = orderItemRepository.findByOrderId(id);
+       List<OrderViewResponseDto> result = new ArrayList<>();
+
+       for(OrderItem item: items){
+           Product product = item.getProduct();
+           result.add(new OrderViewResponseDto().toDto(item,product.getName(), product.getPrice(), product.getMainImage()));
+       }
+
+        return result;
     }
 
+
+    //수정
     @Override
     public void orderUpdate(Long id, Order order){
         Order tempOrder = orderRepository.findById(id).get();
