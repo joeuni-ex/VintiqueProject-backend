@@ -35,6 +35,7 @@ public class UserServiceImpl implements UserService{
     public Optional<User> findByUsername(String username){
         return userRepository.findByUsername(username);
     }
+
     //유저 권한 업데이트하기
     @Override
     @Transactional //update,delete 쿼리에 적용하여 안정성 보장
