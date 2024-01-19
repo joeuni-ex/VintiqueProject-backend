@@ -70,9 +70,19 @@ public class OrderServiceImpl implements OrderService {
         Pageable pageable = PageRequest.of(page, maxPageSize); //maxPageSize -> 한 페이지에 출력할 게시글 개수
         Page<Order> orders = orderRepository.findAll(pageable);
 
+        return orders.map(OrderResponseDto::toDto);
+    }
+
+
+    //유저별 주문 내역 조회(페이징 추가)
+    @Override
+    public Page<OrderResponseDto> getUserOrder(int page, int maxPageSize,User user) {
+        Pageable pageable = PageRequest.of(page, maxPageSize); //maxPageSize -> 한 페이지에 출력할 게시글 개수
+        Page<Order> orders = orderRepository.findByUserId(user.getId(),pageable);
 
         return orders.map(OrderResponseDto::toDto);
     }
+
 
 
 

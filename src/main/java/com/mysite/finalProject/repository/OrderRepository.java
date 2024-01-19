@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
-    Order findByUserId(int userId);
+    Page<Order> findByUserId(Long userId,Pageable pageable);
 
 
     //전체 제품 조회 페이지네이션 적용

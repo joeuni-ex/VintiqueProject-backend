@@ -20,6 +20,9 @@ public interface OrderService {
     Page<OrderResponseDto> getAllOrders(int page, int maxPageSize);
 
 
+    //유저별 주문 내역 조회(페이징 추가)
+    Page<OrderResponseDto> getUserOrder(int page, int maxPageSize, User user);
+
     //유저 주문 상세 내용
     List<OrderViewResponseDto> orderView(Long id);
 

@@ -23,7 +23,7 @@ public class OrderController {
 
     //전체 주문 내역 가져오기
     @GetMapping("/all")
-    public ResponseEntity<Object> myOrderPage(@RequestParam(value = "page",defaultValue = "0") int page , @RequestParam(value = "maxpage",defaultValue = "5") int maxPageSize){
+    public ResponseEntity<Object> allOrder(@RequestParam(value = "page",defaultValue = "0") int page , @RequestParam(value = "maxpage",defaultValue = "5") int maxPageSize){
         return new ResponseEntity<>( orderService.getAllOrders(page,maxPageSize),HttpStatus.OK);
     }
 
@@ -36,6 +36,17 @@ public class OrderController {
         return new ResponseEntity<>( orderService.order(user),HttpStatus.CREATED);
     }
 
+    //유저별 주문 내역 가져오기
+    @GetMapping()
+    public ResponseEntity<Object> myOrderPage(@RequestParam(value = "page",defaultValue = "0") int page , @RequestParam(value = "maxpage",defaultValue = "5") int maxPageSize){
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByUsername(authentication.getName()).orElseThrow();
+
+        return new ResponseEntity<>( orderService.getUserOrder(page,maxPageSize,user),HttpStatus.OK);
+    }
+
+
     //주문 완료 -> 주문 상세 조회
     @GetMapping("/success/{id}")
     public ResponseEntity<Object> myOrderView(@PathVariable Long id){
@@ -44,6 +55,8 @@ public class OrderController {
 
         return new ResponseEntity<>( orderService.orderView(id),HttpStatus.CREATED);
     }
+
+
 
     //주문 상태 변경
     @PutMapping("/change/status/{id}")
