@@ -96,7 +96,7 @@ public class OrderServiceImpl implements OrderService {
 
        for(OrderItem item: items){
            Product product = item.getProduct();
-           result.add(new OrderViewResponseDto().toDto(item,product.getName(), product.getPrice(), product.getMainImage()));
+           result.add(new OrderViewResponseDto().toDto(item,product.getId(),  product.getName(), product.getPrice(), product.getMainImage()));
        }
 
         return result;

@@ -16,13 +16,14 @@ import lombok.ToString;
 public class OrderViewResponseDto {
 
     private Long id;
-    private String name;
+    private Long productId; //제품 id
+    private String name; //제품 이름
     private int quantity; // 개수
     private int price; // 금액
     private String mainImage; //메인 이미지
 
-    public static OrderViewResponseDto toDto(OrderItem orderItem, String name, int price ,String mainImage) {
-        return new OrderViewResponseDto(orderItem.getId(),name, orderItem.getQuantity(),price,mainImage);
+    public static OrderViewResponseDto toDto(OrderItem orderItem, Long productId, String name, int price ,String mainImage) {
+        return new OrderViewResponseDto(orderItem.getId(),productId ,name, orderItem.getQuantity(),price,mainImage);
     }
 
 }
