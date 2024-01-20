@@ -38,6 +38,14 @@ public class ReviewServiceImpl implements ReviewService{
     }
 
     @Override
+    //유저 별 리뷰 조회
+    public List<ReviewItem> getReviewsByUserID(User user) {
+        return reviewRepository.findReviewByUserId(user.getId());
+    }
+
+
+
+    @Override
     //본인 작성 여부 확인
     public String getReviewWriter(Long reviewId){
         return reviewRepository.findUsernameById(reviewId);

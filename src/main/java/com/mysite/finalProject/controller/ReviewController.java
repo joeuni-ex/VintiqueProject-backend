@@ -40,6 +40,13 @@ public class ReviewController {
         return new ResponseEntity<>(  reviewService.getReviewsByProductId(productId),HttpStatus.OK);
     }
 
+    //유저 별 리뷰 조회
+    @GetMapping
+    public ResponseEntity<Object> getReviewsByUserId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByUsername(authentication.getName()).orElseThrow();
+        return new ResponseEntity<>(  reviewService.getReviewsByUserID(user),HttpStatus.OK);
+    }
 
     //리뷰 삭제(본인이 작성한 리뷰만 가능)
     @DeleteMapping("{reviewId}")

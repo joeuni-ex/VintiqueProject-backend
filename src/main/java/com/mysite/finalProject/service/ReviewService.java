@@ -13,6 +13,9 @@ public interface ReviewService {
     //제품 별 리뷰 조회
     List<ReviewItem> getReviewsByProductId(Long productId);
 
+    //유저 별 리뷰 조회
+    List<ReviewItem> getReviewsByUserID(User user);
+
     //본인 작성 여부 확인
     String getReviewWriter(Long reviewId);
 

@@ -23,9 +23,25 @@ public interface ReviewRepository extends JpaRepository<Review,Long> {
     List<ReviewItem> findByReviewProductId(@Param("productId") Long productId);
 
 
+    //리뷰 작성자 찾기
     @Query("select " +
             "u.username as username " +
             "from Review r left join User u on r.userId = u.id " +
             "where r.id = :reviewId" )
     String findUsernameById(@Param("reviewId") Long reviewId);
+
+    //유저 별 리뷰 목록
+    @Query("select " +
+            "r.id as id," +
+            "r.reviewContent as reviewContent, " +
+            "r.rate as rate, " +
+            "r.createTime as createTime, " +
+            "u.id as userId, " +
+            "u.name as name " +
+            "from Review r left join User u on r.userId = u.id " +
+            "where r.userId = :userId" )
+    List<ReviewItem> findReviewByUserId(@Param("userId") Long userId);
+
+
+
 }
