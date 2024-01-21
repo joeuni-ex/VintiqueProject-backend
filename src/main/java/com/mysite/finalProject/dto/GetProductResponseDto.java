@@ -22,7 +22,6 @@ public class GetProductResponseDto {
     private String mainImage;
     private List<String> boardImageList;
     private int favoriteCount;
-    private int reviewCount;
     private String createTime;
 
 

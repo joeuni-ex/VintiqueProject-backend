@@ -45,10 +45,6 @@ public class Product {
     @ColumnDefault("0")
     private Integer favoriteCount;
 
-    @Column(name ="review_count", nullable = false)
-    @ColumnDefault("0")
-    private Integer reviewCount;
-
     @Column(name = "create_time", nullable = false)
     private String createTime;
 
@@ -66,7 +62,6 @@ public class Product {
         this.stock = dto.getStock();
         this.mainImage = dto.getMainImage();
         this.favoriteCount = 0;
-        this.reviewCount =0 ;
         this.createTime = createDateTime;
 
     }

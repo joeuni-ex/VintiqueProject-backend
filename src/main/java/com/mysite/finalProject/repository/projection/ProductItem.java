@@ -13,6 +13,5 @@ public interface ProductItem {
      String getMainImage();
      List<String> getBoardImageList();
      int getFavoriteCount();
-     int getReviewCount();
      String getCreateTime();
 }
