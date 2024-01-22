@@ -72,7 +72,7 @@ public class ProductController {
         return new ResponseEntity<>(productService.findByIdProduct(productId), HttpStatus.OK);
     }
 
-    
+
     //제품 수정하기
     @PutMapping("{productId}")
     public ResponseEntity<Object> modifyProduct(@PathVariable Long productId, @RequestBody PostProductRequestDto product){
