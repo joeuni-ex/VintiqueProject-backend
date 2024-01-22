@@ -28,8 +28,15 @@ public interface ProductService {
     //모든 제품 조회하기(가격 낮은 순 처리)
     Page<Product> findAllOrderByColumnAsc(int page, int maxPageSize);
 
-    //카테고리 별 제품 조회하기(페이징 처리)
+
+    //카테고리 별 제품 조회하기(페이징)
     Page<Product> findByCategory(int page, int maxPageSize, String category);
+
+    //카테고리 별 제품 조회하기(가격 낮은 순 처리 + 페이징)
+    Page<Product> findByCategoryByOrderAsc(int page, int maxPageSize, String category);
+
+    //카테고리 별 제품 조회하기(가격 높은 순 처리 + 페이징)
+    Page<Product> findByCategoryByOrderDesc(int page, int maxPageSize, String category);
 
     //제품 상세 조회하기
     List<ProductItem> findByIdProduct(Long id);

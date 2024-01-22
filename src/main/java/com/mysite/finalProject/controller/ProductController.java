@@ -42,7 +42,28 @@ public class ProductController {
     public ResponseEntity<Object> getAllOrderByPriceAsc(@RequestParam(value = "page",defaultValue = "0") int page , @RequestParam(value = "maxpage",defaultValue = "5") int maxPageSize){
         return new ResponseEntity<>(productService.findAllOrderByColumnAsc(page,maxPageSize), HttpStatus.OK);
     }
+    
+    
+    // 카테고리 별 조회 (페이징)
+    @GetMapping("/{category}/default")
+    public ResponseEntity<Object> getCategory(@RequestParam(value = "page",defaultValue = "0") int page , @RequestParam(value = "maxpage",defaultValue = "5") int maxPageSize,@PathVariable String category){
+        return new ResponseEntity<>(productService.findByCategory(page,maxPageSize,category), HttpStatus.OK);
+    }
 
+    // 카테고리 별 조회 (가격 낮은 순)
+    @GetMapping("/{category}/price-asc")
+    public ResponseEntity<Object> getCategoryByOrderAsc(@PathVariable String category, @RequestParam(value = "page",defaultValue = "0") int page , @RequestParam(value = "maxpage",defaultValue = "5") int maxPageSize){
+        return new ResponseEntity<>(productService.findByCategoryByOrderAsc(page,maxPageSize,category), HttpStatus.OK);
+    }
+
+    // 카테고리 별 조회 (가격 높은 순)
+    @GetMapping("/{category}/price-desc")
+    public ResponseEntity<Object> getCategoryByOrderDesc(@PathVariable String category,
+                                            @RequestParam(value = "page",defaultValue = "0") int page,
+                                            @RequestParam(value = "maxpage",defaultValue = "5") int maxPageSize
+                                            ){
+        return new ResponseEntity<>(productService.findByCategoryByOrderDesc(page,maxPageSize,category), HttpStatus.OK);
+    }
 
 
     //제품 상세 조회하기
