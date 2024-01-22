@@ -9,6 +9,9 @@ import com.mysite.finalProject.repository.UserRepository;
 import com.mysite.finalProject.repository.projection.ReviewItem;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,8 +42,9 @@ public class ReviewServiceImpl implements ReviewService{
 
     @Override
     //유저 별 리뷰 조회
-    public List<ReviewItem> getReviewsByUserID(User user) {
-        return reviewRepository.findReviewByUserId(user.getId());
+    public Page<ReviewItem> getReviewsByUserID(int page, int maxPageSize, User user) {
+        Pageable pageable = PageRequest.of(page, maxPageSize); //maxPageSize -> 한 페이지에 출력할 게시글 개수
+        return reviewRepository.findReviewByUserId(pageable, user.getId());
     }
 
 

@@ -42,10 +42,10 @@ public class ReviewController {
 
     //유저 별 리뷰 조회
     @GetMapping
-    public ResponseEntity<Object> getReviewsByUserId() {
+    public ResponseEntity<Object> getReviewsByUserId(@RequestParam(value = "page",defaultValue = "0") int page , @RequestParam(value = "maxpage",defaultValue = "5") int maxPageSize) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findByUsername(authentication.getName()).orElseThrow();
-        return new ResponseEntity<>(  reviewService.getReviewsByUserID(user),HttpStatus.OK);
+        return new ResponseEntity<>(  reviewService.getReviewsByUserID(page,maxPageSize,user),HttpStatus.OK);
     }
 
     //리뷰 삭제(본인이 작성한 리뷰만 가능)
