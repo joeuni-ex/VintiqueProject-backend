@@ -17,11 +17,11 @@ public class ProductController {
     //제품 추가하기
     @PostMapping
     public ResponseEntity<Object> saveProduct(@RequestBody PostProductRequestDto product){
-
-        for(int i =1;i<=20; i++){
-            productService.saveProduct(product);
-        }
-        return new ResponseEntity<>(  HttpStatus.CREATED);
+//
+//        for(int i =1;i<=20; i++){
+//            productService.saveProduct(product);
+//        }
+        return new ResponseEntity<>(productService.saveProduct(product), HttpStatus.CREATED);
     }
 
 
@@ -30,6 +30,19 @@ public class ProductController {
     public ResponseEntity<Object> getAllProducts(@RequestParam(value = "page",defaultValue = "0") int page , @RequestParam(value = "maxpage",defaultValue = "5") int maxPageSize){
         return new ResponseEntity<>(productService.findAll(page,maxPageSize), HttpStatus.OK);
     }
+
+    //전체 제품 조회하기 (가격 높은 순 )
+    @GetMapping("/price-desc")
+    public ResponseEntity<Object> getAllOrderByPriceDesc(@RequestParam(value = "page",defaultValue = "0") int page , @RequestParam(value = "maxpage",defaultValue = "5") int maxPageSize){
+        return new ResponseEntity<>(productService.findAllOrderByColumnDesc(page,maxPageSize), HttpStatus.OK);
+    }
+
+    // 전체 제품 조회하기 ( 가격 낮은 순 )
+    @GetMapping("/price-asc")
+    public ResponseEntity<Object> getAllOrderByPriceAsc(@RequestParam(value = "page",defaultValue = "0") int page , @RequestParam(value = "maxpage",defaultValue = "5") int maxPageSize){
+        return new ResponseEntity<>(productService.findAllOrderByColumnAsc(page,maxPageSize), HttpStatus.OK);
+    }
+
 
 
     //제품 상세 조회하기

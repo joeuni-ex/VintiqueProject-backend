@@ -60,6 +60,21 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findAll(pageable);
     }
 
+    //모든 제품 조회하기(가격 높은 순 처리)
+    @Override
+    public Page<Product> findAllOrderByColumnDesc(int page, int maxPageSize){
+        Pageable pageable = PageRequest.of(page, maxPageSize); //maxPageSize -> 한 페이지에 출력할 게시글 개수
+        return productRepository.findAllByOrderByPriceDesc(pageable);
+    }
+
+    //모든 제품 조회하기(가격 낮은 순 처리)
+    @Override
+    public Page<Product> findAllOrderByColumnAsc(int page, int maxPageSize){
+        Pageable pageable = PageRequest.of(page, maxPageSize); //maxPageSize -> 한 페이지에 출력할 게시글 개수
+        return productRepository.findAllByOrderByPriceAsc(pageable);
+    }
+
+
     //카테고리 별 제품 조회하기(페이징 처리)
     @Override
     public Page<Product> findByCategory(int page, int maxPageSize,String category){

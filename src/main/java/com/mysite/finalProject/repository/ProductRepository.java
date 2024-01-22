@@ -31,5 +31,11 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
     //전체 제품 조회 페이지네이션 적용
     Page<Product> findAll (Pageable pageable);
 
+    //전체 제품 조회 가격 높은 순 , 페이지네이션 적용
+    Page<Product> findAllByOrderByPriceDesc (Pageable pageable);
+
+    //전체 제품 조회 가격 낮은 순 , 페이지네이션 적용
+    Page<Product> findAllByOrderByPriceAsc (Pageable pageable);
+    
     Page<Product> findByCategory(Pageable pageable, String category);
 }
