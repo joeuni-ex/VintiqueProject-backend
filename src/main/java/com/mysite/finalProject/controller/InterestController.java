@@ -21,16 +21,6 @@ public class InterestController {
     private final InterestService interestService;
 
 
-
-    //관심 제품 조회
-    @GetMapping
-    public ResponseEntity<Object> getCategoryByOrderDesc(@RequestParam(value = "page",defaultValue = "0") int page,
-                                                         @RequestParam(value = "maxpage",defaultValue = "5") int maxPageSize){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findByUsername(authentication.getName()).orElseThrow();
-        return new ResponseEntity<>(interestService.getInterestByUser(page,maxPageSize,user), HttpStatus.OK);
-    }
-
     //관심 제품 추가
     @PostMapping("{productId}")
     public ResponseEntity<Object> create(@PathVariable Long productId) {
@@ -39,6 +29,15 @@ public class InterestController {
         interestService.addInterest(productId,user);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    //관심 제품 조회
+    @GetMapping
+    public ResponseEntity<Object> getCategoryByOrderDesc(@RequestParam(value = "page",defaultValue = "0") int page,
+                                                         @RequestParam(value = "maxpage",defaultValue = "5") int maxPageSize){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByUsername(authentication.getName()).orElseThrow();
+        return new ResponseEntity<>(interestService.getInterestByUser(page,maxPageSize,user), HttpStatus.OK);
     }
 
     //관심 제품 삭제

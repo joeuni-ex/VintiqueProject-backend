@@ -23,6 +23,15 @@ public class InterestServiceImpl implements InterestService{
     private final InterestRepository interestRepository;
     private final ProductRepository productRepository;
 
+    @Override
+    //관심 제품 추가하기
+    public void addInterest(Long productId, User user){
+        Product product =  productRepository.findById(productId).get();
+        Interest interest =  Interest.addInterest(user,product,productId);
+        interestRepository.save(interest);
+    }
+
+
     //유저별 관심 제품 내역 조회(페이징 추가)
     @Override
     public Page<InterestResponseDto> getInterestByUser(int page, int maxPageSize, User user) {
@@ -38,19 +47,9 @@ public class InterestServiceImpl implements InterestService{
         return new PageImpl<>(result, pageable, interests.getTotalElements());
     }
 
-    @Override
-    //관심 제품 작성하기
-    public void addInterest(Long productId, User user){
-        Product product =  productRepository.findById(productId).get();
-        Interest interest =  Interest.addInterest(user,product,productId);
-        interestRepository.save(interest);
-    }
-
-
     //관심 제품 삭제하기
     @Override
     public void deleteInterestByUserId(Long productId, Long userId){
-        System.out.println("//////"+productId +"++++++"+userId);
         interestRepository.deleteByUserIdAndProductId(userId,productId);
     }
 }

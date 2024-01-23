@@ -57,7 +57,7 @@ public class ReviewController {
 
 
 
-    //리뷰 수정
+    //리뷰 수정(본인이 작성한 리뷰만 가능)
     @PutMapping("{reviewId}")
     public ResponseEntity<Object> modifyById(@RequestBody ReviewRequestDto req, @PathVariable Long reviewId ) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -75,7 +75,7 @@ public class ReviewController {
     }
 
 
-        //리뷰 삭제(본인이 작성한 리뷰만 가능)
+    //리뷰 삭제(본인이 작성한 리뷰만 가능)
     @DeleteMapping("{reviewId}")
     public ResponseEntity<Object> deleteById(@PathVariable Long reviewId ) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

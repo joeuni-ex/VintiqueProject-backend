@@ -45,7 +45,7 @@ public class Review {
     public static Review createReview(User user, ReviewRequestDto dto){
         //날짜 포맷 설정
         Date now = Date.from(Instant.now());
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String createDateTime = simpleDateFormat.format(now);
 
         Review review = new Review();
