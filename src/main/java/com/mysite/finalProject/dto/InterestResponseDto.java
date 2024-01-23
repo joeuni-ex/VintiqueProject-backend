@@ -18,10 +18,12 @@ public class InterestResponseDto {
     private String name; //제품 이름
     private int price; // 금액
     private String mainImage; //메인 이미지
+    private String createTime; //관심 제품 추가 일자
 
 
-    public static InterestResponseDto toDto(User user,Product product) {
-        return new InterestResponseDto(user.getId(), product.getId(), product.getName(), product.getPrice(), product.getMainImage());
+
+    public static InterestResponseDto toDto(User user,Product product,String createTime) {
+        return new InterestResponseDto(user.getId(), product.getId(), product.getName(), product.getPrice(), product.getMainImage(),createTime);
     }
 
 }

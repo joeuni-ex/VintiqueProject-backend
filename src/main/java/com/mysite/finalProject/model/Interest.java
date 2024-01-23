@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.Date;
 import java.util.Optional;
 
 @Data
@@ -34,13 +37,26 @@ public class Interest {
     @JoinColumn(name = "product_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Product product;
 
+
+    @Column(name = "create_time", nullable = false)
+    private String createTime;
+
+
+
     //관심 제품 저장
     public static Interest addInterest(User user, Product product , Long productId){
+        //날짜 포맷 설정
+        Date now = Date.from(Instant.now());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd");
+        String createDateTime = simpleDateFormat.format(now);
+
+
         Interest interest = new Interest();
 
         interest.setUserId(user.getId());
         interest.setProduct(product);
         interest.setProductId(productId);
+        interest.setCreateTime(createDateTime);
         return interest;
     }
 

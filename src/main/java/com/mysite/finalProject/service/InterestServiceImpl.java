@@ -33,7 +33,7 @@ public class InterestServiceImpl implements InterestService{
 
         for(Interest item : interests) {
             Product product = item.getProduct();
-            result.add(new InterestResponseDto().toDto(user,product));
+            result.add(new InterestResponseDto().toDto(user,product,item.getCreateTime()));
         }
         return new PageImpl<>(result, pageable, interests.getTotalElements());
     }

@@ -1,6 +1,8 @@
 package com.mysite.finalProject.service;
 
 import com.mysite.finalProject.dto.ReviewRequestDto;
+import com.mysite.finalProject.dto.ReviewResponseDto;
+import com.mysite.finalProject.model.Product;
 import com.mysite.finalProject.model.Review;
 import com.mysite.finalProject.model.User;
 import com.mysite.finalProject.repository.OrderItemRepository;
@@ -10,10 +12,12 @@ import com.mysite.finalProject.repository.projection.ReviewItem;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -42,9 +46,18 @@ public class ReviewServiceImpl implements ReviewService{
 
     @Override
     //유저 별 리뷰 조회
-    public Page<ReviewItem> getReviewsByUserID(int page, int maxPageSize, User user) {
+    public Page<ReviewResponseDto> getReviewsByUserID(int page, int maxPageSize, User user) {
         Pageable pageable = PageRequest.of(page, maxPageSize); //maxPageSize -> 한 페이지에 출력할 게시글 개수
-        return reviewRepository.findReviewByUserId(pageable, user.getId());
+
+        Page<Review> reviews = reviewRepository.findByUserId(user.getId(),pageable);
+
+        List<ReviewResponseDto> result = new ArrayList<>();
+
+        for(Review review : reviews) {
+            Product product = review.getProduct();
+            result.add(new ReviewResponseDto().toDto(product,review));
+        }
+        return new PageImpl<>(result, pageable, reviews.getTotalElements());
     }
 
     @Override
