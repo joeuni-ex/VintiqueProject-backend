@@ -1,6 +1,5 @@
 package com.mysite.finalProject.repository;
 
-import com.mysite.finalProject.model.Interest;
 import com.mysite.finalProject.model.Review;
 import com.mysite.finalProject.repository.projection.ReviewItem;
 import org.springframework.data.domain.Page;
@@ -47,4 +46,6 @@ public interface ReviewRepository extends JpaRepository<Review,Long> {
 
 
     Page<Review> findByUserId(Long userId, Pageable pageable);
+
+    Boolean existsByOrderItemId(Long id);
 }

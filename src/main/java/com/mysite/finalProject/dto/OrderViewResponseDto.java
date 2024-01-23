@@ -21,9 +21,9 @@ public class OrderViewResponseDto {
     private int quantity; // 개수
     private int price; // 금액
     private String mainImage; //메인 이미지
-
-    public static OrderViewResponseDto toDto(OrderItem orderItem, Long productId, String name, int price ,String mainImage) {
-        return new OrderViewResponseDto(orderItem.getId(),productId ,name, orderItem.getQuantity(),price,mainImage);
+    private boolean writtenReview;//작성한 리뷰
+    public static OrderViewResponseDto toDto(OrderItem orderItem, Long productId, String name, int price ,String mainImage,boolean writtenReview) {
+        return new OrderViewResponseDto(orderItem.getId(),productId ,name, orderItem.getQuantity(),price,mainImage,writtenReview);
     }
 
 }

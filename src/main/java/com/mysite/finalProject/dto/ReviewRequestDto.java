@@ -14,8 +14,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class ReviewRequestDto {
 
+    private Long orderItemId;
     private String reviewContent;
     private Integer rate;
     private Long productId;
+
 
 }

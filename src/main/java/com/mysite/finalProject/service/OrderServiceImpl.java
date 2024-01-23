@@ -3,10 +3,7 @@ package com.mysite.finalProject.service;
 import com.mysite.finalProject.dto.OrderResponseDto;
 import com.mysite.finalProject.dto.OrderViewResponseDto;
 import com.mysite.finalProject.model.*;
-import com.mysite.finalProject.repository.CartItemRepository;
-import com.mysite.finalProject.repository.CartRepository;
-import com.mysite.finalProject.repository.OrderItemRepository;
-import com.mysite.finalProject.repository.OrderRepository;
+import com.mysite.finalProject.repository.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -26,6 +23,7 @@ public class OrderServiceImpl implements OrderService {
     private final OrderItemRepository orderItemRepository;
     private final CartRepository cartRepository;
     private final CartItemRepository cartItemRepository;
+    private final ReviewRepository reviewRepository;
 
 
 
@@ -87,11 +85,13 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderViewResponseDto> orderView(Long id){
        List<OrderItem>  items = orderItemRepository.findByOrderId(id);
+
        List<OrderViewResponseDto> result = new ArrayList<>();
 
        for(OrderItem item: items){
            Product product = item.getProduct();
-           result.add(new OrderViewResponseDto().toDto(item,product.getId(),  product.getName(), product.getPrice(), product.getMainImage()));
+           Boolean review = reviewRepository.existsByOrderItemId(item.getId());
+           result.add(new OrderViewResponseDto().toDto(item,product.getId(),  product.getName(), product.getPrice(), product.getMainImage(),review));
        }
 
         return result;

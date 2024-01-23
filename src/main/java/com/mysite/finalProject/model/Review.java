@@ -37,6 +37,14 @@ public class Review {
     @JoinColumn(name = "product_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Product product;
 
+    //테스트
+    @Column(name = "orderItem_id", nullable = false)
+    private Long orderItemId;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "orderItem_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private OrderItem orderItem;
+
     @Column(name = "create_time", nullable = false)
     private String createTime;
 
@@ -55,6 +63,7 @@ public class Review {
         review.setReviewContent(dto.getReviewContent());
         review.setRate(dto.getRate());
         review.setProductId(dto.getProductId());
+        review.setOrderItemId(dto.getOrderItemId());
         review.setCreateTime(createDateTime);
         return review;
     }
