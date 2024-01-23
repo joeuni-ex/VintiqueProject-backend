@@ -48,7 +48,27 @@ public class ReviewController {
         return new ResponseEntity<>(  reviewService.getReviewsByUserID(page,maxPageSize,user),HttpStatus.OK);
     }
 
-    //리뷰 삭제(본인이 작성한 리뷰만 가능)
+
+
+    //리뷰 수정
+    @PutMapping("{reviewId}")
+    public ResponseEntity<Object> modifyById(@RequestBody ReviewRequestDto req, @PathVariable Long reviewId ) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByUsername(authentication.getName()).orElseThrow();
+
+        String result = reviewService.getReviewWriter(reviewId);
+        //리뷰를 작성한 유저와 현재 로그인 되어있는 유저가 다를 경우 에러 발생
+        if(!Objects.equals(user.getUsername(), result)){
+            return new ResponseEntity<>(  HttpStatus.CONFLICT);
+        }
+        else{
+            reviewService.modify(req, reviewId);
+        }
+        return new ResponseEntity<>( HttpStatus.OK);
+    }
+
+
+        //리뷰 삭제(본인이 작성한 리뷰만 가능)
     @DeleteMapping("{reviewId}")
     public ResponseEntity<Object> deleteById(@PathVariable Long reviewId ) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

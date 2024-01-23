@@ -58,4 +58,24 @@ public class Review {
         review.setCreateTime(createDateTime);
         return review;
     }
+
+
+
+    //리뷰 수정
+    public static Review modifyReview(User user, ReviewRequestDto dto){
+        //날짜 포맷 설정
+        Date now = Date.from(Instant.now());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
+        String createDateTime = simpleDateFormat.format(now);
+
+        Review review = new Review();
+
+        review.setUser(user);
+        review.setUserId(user.getId());
+        review.setReviewContent(dto.getReviewContent());
+        review.setRate(dto.getRate());
+        review.setProductId(dto.getProductId());
+        review.setCreateTime(createDateTime);
+        return review;
+    }
 }

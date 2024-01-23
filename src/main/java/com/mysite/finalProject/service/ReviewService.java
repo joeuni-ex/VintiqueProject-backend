@@ -22,5 +22,8 @@ public interface ReviewService {
     //본인 작성 여부 확인
     String getReviewWriter(Long reviewId);
 
+    //리뷰 수정하기
+    void modify(ReviewRequestDto req, Long reviewId);
+
     void deleteById(User user, Long reviewId);
 }

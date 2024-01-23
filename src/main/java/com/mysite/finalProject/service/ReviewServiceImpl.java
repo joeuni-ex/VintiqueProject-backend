@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -66,7 +67,29 @@ public class ReviewServiceImpl implements ReviewService{
         return reviewRepository.findUsernameById(reviewId);
     }
 
-    //제품 삭제 -> 댓글 작성한 유저만 가능
+
+
+    @Override
+    //리뷰 수정하기
+    public void modify(ReviewRequestDto req, Long reviewId  ){
+        // 일단 id에 맞는 값들을 가져옴
+        Optional<Review> review = reviewRepository.findById(reviewId);
+
+        review.ifPresent(t->{
+
+                    if(req.getReviewContent() !=null){
+                        t.setReviewContent(req.getReviewContent());
+                    }
+                    if(req.getRate() !=null){
+                        t.setRate(req.getRate());
+                    }
+                    this.reviewRepository.save(t);
+                }
+        );
+    }
+    
+    
+    //리뷰 삭제 -> 댓글 작성한 유저만 가능
     @Override
     public void deleteById(User user, Long reviewId) {
         reviewRepository.deleteById(reviewId);
