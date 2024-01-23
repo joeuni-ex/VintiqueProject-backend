@@ -24,7 +24,7 @@ public class ReviewController {
     private final ReviewService reviewService;
     private final UserRepository userRepository;
 
-    // 리뷰 저장하기
+    //리뷰 저장하기
     @PostMapping
     public ResponseEntity<Object> create(@RequestBody ReviewRequestDto req ) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -33,6 +33,13 @@ public class ReviewController {
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+    //리뷰 상세 조회
+    @GetMapping("detail/{reviewId}")
+    public ResponseEntity<Object> getReviewById(@PathVariable Long reviewId) {
+        return new ResponseEntity<>(  reviewService.getReviewById(reviewId),HttpStatus.OK);
+    }
+
 
     //제품 별 리뷰 조회
     @GetMapping("{productId}")

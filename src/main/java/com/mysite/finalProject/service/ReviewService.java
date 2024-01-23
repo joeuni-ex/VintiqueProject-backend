@@ -2,15 +2,21 @@ package com.mysite.finalProject.service;
 
 import com.mysite.finalProject.dto.ReviewRequestDto;
 import com.mysite.finalProject.dto.ReviewResponseDto;
+import com.mysite.finalProject.model.Review;
 import com.mysite.finalProject.model.User;
 import com.mysite.finalProject.repository.projection.ReviewItem;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ReviewService {
     //리뷰 작성하기
     void create(ReviewRequestDto req, User User);
+
+
+    //리뷰 상세 조회
+    ReviewResponseDto getReviewById(Long reviewId);
 
     //제품 별 리뷰 조회
     List<ReviewItem> getReviewsByProductId(Long productId);

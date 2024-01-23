@@ -33,11 +33,23 @@ public class ReviewServiceImpl implements ReviewService{
 
 
     @Override
-    //리뷰 작성하기
+    //리뷰 저장하기
     public void create(ReviewRequestDto req, User user){
         Review review =  Review.createReview(user,req);
         reviewRepository.save(review);
     }
+
+    @Override
+    //리뷰 상세 조회
+    public ReviewResponseDto getReviewById(Long reviewId) {
+
+        Review review = reviewRepository.findById(reviewId).get();
+
+        Product product = review.getProduct();
+        ReviewResponseDto result=  new ReviewResponseDto().toDto(product,review);
+        return result;
+    }
+
 
     //제품 별 리뷰 조회
     @Override
@@ -71,7 +83,7 @@ public class ReviewServiceImpl implements ReviewService{
 
     @Override
     //리뷰 수정하기
-    public void modify(ReviewRequestDto req, Long reviewId  ){
+    public void modify(ReviewRequestDto req, Long reviewId){
         // 일단 id에 맞는 값들을 가져옴
         Optional<Review> review = reviewRepository.findById(reviewId);
 
