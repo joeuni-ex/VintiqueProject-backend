@@ -25,8 +25,9 @@ public interface ProductService {
     //모든 제품 조회하기(페이징 처리)
     Page<ProductResponseDto> findAll(int page, int maxPageSize, User user);
 
-    //모든 제품 조회하기(가격 높은 순 처리)
-    Page<Product> findAllOrderByColumnDesc(int page, int maxPageSize);
+
+    //모든 제품 조회하기(가격 높은 순 처리 + 페이징)
+    Page<ProductResponseDto> findAllOrderByColumnDesc(int page, int maxPageSize, User user);
 
     //모든 제품 조회하기(가격 낮은 순 처리)
     Page<Product> findAllOrderByColumnAsc(int page, int maxPageSize);
