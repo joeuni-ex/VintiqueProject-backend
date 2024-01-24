@@ -94,8 +94,17 @@ public class ProductController {
     // 카테고리 별 조회 (가격 낮은 순)
     @GetMapping("/{category}/price-asc")
     public ResponseEntity<Object> getCategoryByOrderAsc(@PathVariable String category, @RequestParam(value = "page",defaultValue = "0") int page , @RequestParam(value = "maxpage",defaultValue = "5") int maxPageSize){
-        return new ResponseEntity<>(productService.findByCategoryByOrderAsc(page,maxPageSize,category), HttpStatus.OK);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        //인증된 유저의 여부에 따라 관심 제품 가져오기
+        //인증된 유저는 가져오지 않고, 인증된 유저만 가져온다.
+        if (authentication != null && authentication.isAuthenticated() && authentication instanceof UsernamePasswordAuthenticationToken) {
+            User user = userRepository.findByUsername(authentication.getName()).orElseThrow(() -> new NoSuchElementException("User not found"));
+            return new ResponseEntity<>(productService.findByCategoryByOrderAsc(page, maxPageSize, user,category), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(productService.findByCategoryByOrderAsc(page, maxPageSize, null,category), HttpStatus.OK);
+        }
     }
+
 
     // 카테고리 별 조회 (가격 높은 순)
     @GetMapping("/{category}/price-desc")
@@ -103,7 +112,15 @@ public class ProductController {
                                             @RequestParam(value = "page",defaultValue = "0") int page,
                                             @RequestParam(value = "maxpage",defaultValue = "5") int maxPageSize
                                             ){
-        return new ResponseEntity<>(productService.findByCategoryByOrderDesc(page,maxPageSize,category), HttpStatus.OK);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        //인증된 유저의 여부에 따라 관심 제품 가져오기
+        //인증된 유저는 가져오지 않고, 인증된 유저만 가져온다.
+        if (authentication != null && authentication.isAuthenticated() && authentication instanceof UsernamePasswordAuthenticationToken) {
+            User user = userRepository.findByUsername(authentication.getName()).orElseThrow(() -> new NoSuchElementException("User not found"));
+            return new ResponseEntity<>(productService.findByCategoryByOrderDesc(page, maxPageSize, user,category), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(productService.findByCategoryByOrderDesc(page, maxPageSize, null,category), HttpStatus.OK);
+        }
     }
 
 
