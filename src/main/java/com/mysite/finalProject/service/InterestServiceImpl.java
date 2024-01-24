@@ -31,6 +31,7 @@ public class InterestServiceImpl implements InterestService{
         product.setInterestCount(product.getInterestCount() + 1);
         productRepository.save(product);
 
+
         Interest interest =  Interest.addInterest(user,product,productId);
         interestRepository.save(interest);
     }

@@ -1,14 +1,18 @@
 package com.mysite.finalProject.service;
 
 import com.mysite.finalProject.dto.PostProductRequestDto;
+import com.mysite.finalProject.dto.ProductResponseDto;
 import com.mysite.finalProject.model.Image;
 import com.mysite.finalProject.model.Product;
+import com.mysite.finalProject.model.User;
 import com.mysite.finalProject.repository.ImageRepository;
+import com.mysite.finalProject.repository.InterestRepository;
 import com.mysite.finalProject.repository.ProductRepository;
 import com.mysite.finalProject.repository.projection.ProductItem;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -24,6 +28,7 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
     private final ImageRepository imageRepository;
+    private final InterestRepository interestRepository;
 
 
 
@@ -53,11 +58,22 @@ public class ProductServiceImpl implements ProductService {
 
 
 
-    //모든 제품 조회하기(페이징 처리)
     @Override
-    public Page<Product> findAll(int page, int maxPageSize){
+    //모든 제품 조회하기(페이징 처리)
+    public Page<ProductResponseDto> findAll(int page, int maxPageSize, User user){
         Pageable pageable = PageRequest.of(page, maxPageSize); //maxPageSize -> 한 페이지에 출력할 게시글 개수
-        return productRepository.findAll(pageable);
+        Page<Product> products = productRepository.findAll(pageable);
+
+        System.out.println("제품테스트"+products);
+        List<ProductResponseDto> result = new ArrayList<>();
+
+        for(Product product: products){
+            Boolean interest = interestRepository.existsByProductIdAndUserId(product.getId(),user.getId()); //이미 리뷰 작성했는지 체크
+            System.out.println("관심 제품 추가 여부 "+interest);
+            result.add(new ProductResponseDto().toDto(product,interest));
+        }
+
+        return new PageImpl<>(result, pageable, products.getTotalElements());
     }
 
     //모든 제품 조회하기(가격 높은 순 처리 + 페이징)
@@ -109,6 +125,7 @@ public class ProductServiceImpl implements ProductService {
     public Optional<Product> modifyProduct(Long id, PostProductRequestDto dto){
         // 일단 id에 맞는 값들을 가져옴
         Optional<Product> entity = this.productRepository.findById(id);
+
 
         entity.ifPresent(t->{
 

@@ -14,5 +14,7 @@ public interface InterestRepository extends JpaRepository<Interest,Long> {
   //유저 별 관심 제품 조회
   Page<Interest> findByUserId(Long userId, Pageable pageable);
 
-    void deleteByUserIdAndProductId(Long userId,Long productId);
+    Boolean existsByProductIdAndUserId(Long productId, Long userId);
+
+  void deleteByUserIdAndProductId(Long userId, Long productId);
 }

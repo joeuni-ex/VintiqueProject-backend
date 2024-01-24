@@ -16,4 +16,6 @@ public interface InterestService {
 
     //관심 제품 삭제하기
     void deleteInterestByUserId(Long productId, Long userId);
+
+
 }

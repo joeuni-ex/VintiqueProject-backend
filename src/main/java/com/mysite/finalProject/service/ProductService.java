@@ -1,7 +1,9 @@
 package com.mysite.finalProject.service;
 
 import com.mysite.finalProject.dto.PostProductRequestDto;
+import com.mysite.finalProject.dto.ProductResponseDto;
 import com.mysite.finalProject.model.Product;
+import com.mysite.finalProject.model.User;
 import com.mysite.finalProject.repository.projection.ProductItem;
 import org.springframework.data.domain.Page;
 
@@ -19,8 +21,9 @@ public interface ProductService {
     //제품 삭제하기
     void deleteProduct(Long id);
 
-    //모든 제품 조회하기(페이징 처리) -> 게시판 용
-    Page<Product> findAll(int page, int maxPageSize);
+
+    //모든 제품 조회하기(페이징 처리)
+    Page<ProductResponseDto> findAll(int page, int maxPageSize, User user);
 
     //모든 제품 조회하기(가격 높은 순 처리)
     Page<Product> findAllOrderByColumnDesc(int page, int maxPageSize);

@@ -1,10 +1,14 @@
 package com.mysite.finalProject.controller;
 
 import com.mysite.finalProject.dto.PostProductRequestDto;
+import com.mysite.finalProject.model.User;
+import com.mysite.finalProject.repository.UserRepository;
 import com.mysite.finalProject.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("api/product")
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class ProductController {
 
     private final ProductService productService;
+    private final UserRepository userRepository;
 
     //제품 추가하기
     @PostMapping
@@ -28,7 +33,11 @@ public class ProductController {
     //전체 제품 조회하기 (페이징 추가)
     @GetMapping
     public ResponseEntity<Object> getAllProducts(@RequestParam(value = "page",defaultValue = "0") int page , @RequestParam(value = "maxpage",defaultValue = "5") int maxPageSize){
-        return new ResponseEntity<>(productService.findAll(page,maxPageSize), HttpStatus.OK);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByUsername(authentication.getName()).orElseThrow();
+        System.out.println("유저테스트"+user);
+
+        return new ResponseEntity<>(productService.findAll(page,maxPageSize,user), HttpStatus.OK);
     }
 
     //전체 제품 조회하기 (가격 높은 순 )

@@ -90,7 +90,7 @@ public class OrderServiceImpl implements OrderService {
 
        for(OrderItem item: items){
            Product product = item.getProduct();
-           Boolean review = reviewRepository.existsByOrderItemId(item.getId());
+           Boolean review = reviewRepository.existsByOrderItemId(item.getId()); //이미 리뷰 작성했는지 체크
            result.add(new OrderViewResponseDto().toDto(item,product.getId(),  product.getName(), product.getPrice(), product.getMainImage(),review));
        }
 
