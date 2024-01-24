@@ -35,4 +35,5 @@ public class ProductResponseDto {
                 product.getCreateTime(),
                 addedInterest);
     }
+
 }

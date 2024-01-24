@@ -7,9 +7,12 @@ import com.mysite.finalProject.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.NoSuchElementException;
 
 @RequestMapping("api/product")
 @RestController
@@ -22,22 +25,23 @@ public class ProductController {
     //제품 추가하기
     @PostMapping
     public ResponseEntity<Object> saveProduct(@RequestBody PostProductRequestDto product){
-//
-//        for(int i =1;i<=20; i++){
-//            productService.saveProduct(product);
-//        }
         return new ResponseEntity<>(productService.saveProduct(product), HttpStatus.CREATED);
     }
 
 
     //전체 제품 조회하기 (페이징 추가)
     @GetMapping
-    public ResponseEntity<Object> getAllProducts(@RequestParam(value = "page",defaultValue = "0") int page , @RequestParam(value = "maxpage",defaultValue = "5") int maxPageSize){
+    public ResponseEntity<Object> getAllProducts(@RequestParam(value = "page",defaultValue = "0") int page , @RequestParam(value = "maxpage",defaultValue = "5") int maxPageSize) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findByUsername(authentication.getName()).orElseThrow();
-        System.out.println("유저테스트"+user);
 
-        return new ResponseEntity<>(productService.findAll(page,maxPageSize,user), HttpStatus.OK);
+        //인증된 유저의 여부에 따라 관심 제품 가져오기
+        //인증된 유저는 가져오지 않고, 인증된 유저만 가져온다.
+        if (authentication != null && authentication.isAuthenticated() && authentication instanceof UsernamePasswordAuthenticationToken) {
+            User user = userRepository.findByUsername(authentication.getName()).orElseThrow(() -> new NoSuchElementException("User not found"));
+            return new ResponseEntity<>(productService.findAll(page, maxPageSize, user), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(productService.findAll(page, maxPageSize, null), HttpStatus.OK);
+        }
     }
 
     //전체 제품 조회하기 (가격 높은 순 )

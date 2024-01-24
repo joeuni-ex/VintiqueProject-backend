@@ -64,15 +64,19 @@ public class ProductServiceImpl implements ProductService {
         Pageable pageable = PageRequest.of(page, maxPageSize); //maxPageSize -> 한 페이지에 출력할 게시글 개수
         Page<Product> products = productRepository.findAll(pageable);
 
-        System.out.println("제품테스트"+products);
         List<ProductResponseDto> result = new ArrayList<>();
 
-        for(Product product: products){
-            Boolean interest = interestRepository.existsByProductIdAndUserId(product.getId(),user.getId()); //이미 리뷰 작성했는지 체크
-            System.out.println("관심 제품 추가 여부 "+interest);
-            result.add(new ProductResponseDto().toDto(product,interest));
+        if(user != null){
+            for(Product product: products){
+                Boolean interest = interestRepository.existsByProductIdAndUserId(product.getId(),user.getId()); //이미 리뷰 작성했는지 체크
+                result.add(new ProductResponseDto().toDto(product,interest));
+            }
+        }else{
+            for(Product product: products){
+                result.add(new ProductResponseDto().toDto(product,false));
+            }
         }
-
+        
         return new PageImpl<>(result, pageable, products.getTotalElements());
     }
 
