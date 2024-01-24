@@ -31,7 +31,6 @@ public class InterestServiceImpl implements InterestService{
         product.setInterestCount(product.getInterestCount() + 1);
         productRepository.save(product);
 
-
         Interest interest =  Interest.addInterest(user,product,productId);
         interestRepository.save(interest);
     }
@@ -55,6 +54,11 @@ public class InterestServiceImpl implements InterestService{
     //관심 제품 삭제하기
     @Override
     public void deleteInterestByUserId(Long productId, Long userId){
+        //제품 Interest count -1
+        Product product =  productRepository.findById(productId).get();
+        product.setInterestCount(product.getInterestCount() - 1);
+        productRepository.save(product);
+
         interestRepository.deleteByUserIdAndProductId(userId,productId);
     }
 }
