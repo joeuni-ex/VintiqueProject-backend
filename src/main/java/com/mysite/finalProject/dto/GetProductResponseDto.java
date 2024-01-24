@@ -21,7 +21,7 @@ public class GetProductResponseDto {
     private Integer stock;
     private String mainImage;
     private List<String> boardImageList;
-    private int favoriteCount;
+    private int interestCount;
     private String createTime;
 
 

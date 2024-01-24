@@ -12,6 +12,6 @@ public interface ProductItem {
      Integer getStock();
      String getMainImage();
      List<String> getBoardImageList();
-     int getFavoriteCount();
+     int getInterestCount();
      String getCreateTime();
 }

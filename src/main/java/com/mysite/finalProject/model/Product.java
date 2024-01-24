@@ -38,12 +38,12 @@ public class Product {
     @Column(name = "stock", nullable = false)
     private Integer stock;
 
-    @Column(name = "main-image", nullable = false)
+    @Column(name = "main_image", nullable = false)
     private String mainImage;
 
-    @Column(name ="favorite_count", nullable = false)
+    @Column(name ="interest_count", nullable = false)
     @ColumnDefault("0")
-    private Integer favoriteCount;
+    private Integer interestCount;
 
     @Column(name = "create_time", nullable = false)
     private String createTime;
@@ -61,7 +61,7 @@ public class Product {
         this.price = dto.getPrice();
         this.stock = dto.getStock();
         this.mainImage = dto.getMainImage();
-        this.favoriteCount = 0;
+        this.interestCount = 0;
         this.createTime = createDateTime;
 
     }

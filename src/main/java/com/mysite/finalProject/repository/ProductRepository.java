@@ -21,7 +21,7 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
             "prd.mainImage as mainImage, " +
             "prd.category as category, " +
             "prd.stock as stock, " +
-            "prd.favoriteCount as favoriteCount, " +
+            "prd.interestCount as interestCount, " +
             "img.image as boardImageList, " +
             "prd.createTime as createTime " +
             "from Product prd left join Image img on prd.id = img.productId " +

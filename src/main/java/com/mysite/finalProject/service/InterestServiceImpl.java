@@ -27,6 +27,11 @@ public class InterestServiceImpl implements InterestService{
     //관심 제품 추가하기
     public void addInterest(Long productId, User user){
         Product product =  productRepository.findById(productId).get();
+        //제품의 interestCount 업데이트(+1)
+        product.setInterestCount(product.getInterestCount() + 1);
+        productRepository.save(product);
+
+
         Interest interest =  Interest.addInterest(user,product,productId);
         interestRepository.save(interest);
     }
