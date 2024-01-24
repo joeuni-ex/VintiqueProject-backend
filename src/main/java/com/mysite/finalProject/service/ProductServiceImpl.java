@@ -104,9 +104,23 @@ public class ProductServiceImpl implements ProductService {
 
     //모든 제품 조회하기(가격 낮은 순 처리 + 페이징)
     @Override
-    public Page<Product> findAllOrderByColumnAsc(int page, int maxPageSize){
+    public Page<ProductResponseDto> findAllOrderByColumnAsc(int page, int maxPageSize, User user){
         Pageable pageable = PageRequest.of(page, maxPageSize); //maxPageSize -> 한 페이지에 출력할 게시글 개수
-        return productRepository.findAllByOrderByPriceAsc(pageable);
+        Page<Product> products = productRepository.findAllByOrderByPriceAsc(pageable);
+
+        List<ProductResponseDto> result = new ArrayList<>();
+
+        if(user != null){
+            for(Product product: products){
+                Boolean interest = interestRepository.existsByProductIdAndUserId(product.getId(),user.getId()); //이미 리뷰 작성했는지 체크
+                result.add(new ProductResponseDto().toDto(product,interest));
+            }
+        }else{
+            for(Product product: products){
+                result.add(new ProductResponseDto().toDto(product,false));
+            }
+        }
+        return new PageImpl<>(result, pageable, products.getTotalElements());
     }
 
     //카테고리 별 제품 조회하기(페이징)
