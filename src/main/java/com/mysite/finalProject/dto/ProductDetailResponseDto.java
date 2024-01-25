@@ -31,8 +31,8 @@ public class ProductDetailResponseDto {
         return new ProductDetailResponseDto(
                 product.getId(),
                 product.getName(),
-                product.getCategory(),
                 product.getDescription(),
+                product.getCategory(),
                 product.getPrice(),
                 product.getStock(),
                 product.getMainImage(),
