@@ -1,6 +1,7 @@
 package com.mysite.finalProject.service;
 
 import com.mysite.finalProject.dto.PostProductRequestDto;
+import com.mysite.finalProject.dto.ProductDetailResponseDto;
 import com.mysite.finalProject.dto.ProductResponseDto;
 import com.mysite.finalProject.model.Product;
 import com.mysite.finalProject.model.User;
@@ -14,6 +15,9 @@ public interface ProductService {
 
     //제품 저장하기
     Product saveProduct(PostProductRequestDto dto);
+
+    //제품 상세 조회하기
+    List<ProductDetailResponseDto> findByIdProduct(Long productId, User user);
 
     //제품 수정하기
     Optional<Product> modifyProduct(Long id, PostProductRequestDto dto);
@@ -41,6 +45,4 @@ public interface ProductService {
     //카테고리 별 제품 조회하기(가격 높은 순 처리 + 페이징)
     Page<ProductResponseDto> findByCategoryByOrderDesc(int page, int maxPageSize, User user, String category);
 
-    //제품 상세 조회하기
-    List<ProductItem> findByIdProduct(Long id);
 }

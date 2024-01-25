@@ -22,10 +22,10 @@ public class OrderItem {
     private Long id;
 
     @Column(name ="quantity", nullable = false)
-    private int quantity; // 개수
+    private Integer quantity; // 개수
 
     @Column(name ="price", nullable = false)
-    private int price; // 금액
+    private Integer price; // 금액
 
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)

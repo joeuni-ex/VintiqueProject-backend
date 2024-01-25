@@ -127,7 +127,15 @@ public class ProductController {
     //제품 상세 조회하기
     @GetMapping("{productId}")
     public ResponseEntity<Object> getProduct(@PathVariable Long productId){
-        return new ResponseEntity<>(productService.findByIdProduct(productId), HttpStatus.OK);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        //인증된 유저의 여부에 따라 관심 제품 가져오기
+        //인증된 유저는 가져오지 않고, 인증된 유저만 가져온다.
+        if (authentication != null && authentication.isAuthenticated() && authentication instanceof UsernamePasswordAuthenticationToken) {
+            User user = userRepository.findByUsername(authentication.getName()).orElseThrow(() -> new NoSuchElementException("User not found"));
+            return new ResponseEntity<>(productService.findByIdProduct(productId,user), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(productService.findByIdProduct(productId,null), HttpStatus.OK);
+        }
     }
 
 

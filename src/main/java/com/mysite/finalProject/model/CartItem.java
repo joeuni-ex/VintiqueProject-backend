@@ -34,7 +34,7 @@ public class CartItem {
 
 
     @Column(nullable = false)
-    private int quantity;
+    private Integer quantity;
 
     public CartItem(Cart cart, Product product, int quantity) {
         this.cart = cart;

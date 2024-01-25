@@ -1,6 +1,7 @@
 package com.mysite.finalProject.service;
 
 import com.mysite.finalProject.dto.PostProductRequestDto;
+import com.mysite.finalProject.dto.ProductDetailResponseDto;
 import com.mysite.finalProject.dto.ProductResponseDto;
 import com.mysite.finalProject.model.Image;
 import com.mysite.finalProject.model.Product;
@@ -76,7 +77,7 @@ public class ProductServiceImpl implements ProductService {
                 result.add(new ProductResponseDto().toDto(product,false));
             }
         }
-        
+
         return new PageImpl<>(result, pageable, products.getTotalElements());
     }
 
@@ -192,9 +193,24 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     //제품 상세 조회하기
-    public List<ProductItem> findByIdProduct(Long id){
+    public List<ProductDetailResponseDto> findByIdProduct(Long productId, User user){
 
-        return productRepository.findByIdImageOfProduct(id);
+        List<ProductItem> productItem = productRepository.findByIdImageOfProduct(productId);
+
+        List<ProductDetailResponseDto> result = new ArrayList<>();
+
+        if(user != null){
+            for(ProductItem ProductDetail : productItem){
+                Boolean interest = interestRepository.existsByProductIdAndUserId(ProductDetail.getId(),user.getId()); //이미 리뷰 작성했는지 체크
+                result.add(new ProductDetailResponseDto().toDto(ProductDetail,interest));
+            }
+        }else{
+            for(ProductItem ProductDetail : productItem){
+                result.add(new ProductDetailResponseDto().toDto(ProductDetail,false));
+            }
+        }
+
+        return result;
     }
 
 

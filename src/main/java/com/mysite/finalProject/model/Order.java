@@ -33,7 +33,7 @@ public class Order {
     private String status; // 상태
 
     @Column(name ="total_price", nullable = false)
-    private int totalPrice; // 총 금액
+    private Integer totalPrice; // 총 금액
 
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
@@ -45,7 +45,7 @@ public class Order {
     private List<OrderItem> order_items = new ArrayList<>();
 
     @Column(name ="cart_item_count", nullable = false)
-    private int cartItemCount;
+    private Integer cartItemCount;
 
     @Column(name ="createDate", nullable = false)
     private String createDate; // 날짜
