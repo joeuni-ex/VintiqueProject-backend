@@ -1,5 +1,5 @@
 # SpringBoot + React + Firebase Project -Vintique
-SpringBoot + FireBase + Firebase 를 활용한 Fullstack 웹 프로젝트 
+SpringBoot + React + Firebase 를 활용한 Fullstack 웹 프로젝트 
 
 ## 💻 프로젝트 소개
 SpringBoot + Firebase + React 를 활용하여 제작한 인테리어 소품을 판매하는 웹 사이트 Vintique 입니다.  
