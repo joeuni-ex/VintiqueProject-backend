@@ -12,10 +12,7 @@ import com.mysite.finalProject.repository.ProductRepository;
 import com.mysite.finalProject.repository.projection.ProductItem;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -62,7 +59,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     //모든 제품 조회하기(페이징 처리)
     public Page<ProductResponseDto> findAll(int page, int maxPageSize, User user){
-        Pageable pageable = PageRequest.of(page, maxPageSize); //maxPageSize -> 한 페이지에 출력할 게시글 개수
+        Pageable pageable = PageRequest.of(page, maxPageSize, Sort.by(Sort.Order.asc("id"))); //maxPageSize -> 한 페이지에 출력할 게시글 개수
         Page<Product> products = productRepository.findAll(pageable);
 
         List<ProductResponseDto> result = new ArrayList<>();
@@ -70,11 +67,11 @@ public class ProductServiceImpl implements ProductService {
         if(user != null){
             for(Product product: products){
                 Boolean interest = interestRepository.existsByProductIdAndUserId(product.getId(),user.getId()); //이미 리뷰 작성했는지 체크
-                result.add(new ProductResponseDto().toDto(product,interest));
+                result.add(ProductResponseDto.toDto(product, interest));
             }
         }else{
             for(Product product: products){
-                result.add(new ProductResponseDto().toDto(product,false));
+                result.add(ProductResponseDto.toDto(product, false));
             }
         }
 
@@ -93,11 +90,11 @@ public class ProductServiceImpl implements ProductService {
         if(user != null){
             for(Product product: products){
                 Boolean interest = interestRepository.existsByProductIdAndUserId(product.getId(),user.getId()); //이미 리뷰 작성했는지 체크
-                result.add(new ProductResponseDto().toDto(product,interest));
+                result.add(ProductResponseDto.toDto(product, interest));
             }
         }else{
             for(Product product: products){
-                result.add(new ProductResponseDto().toDto(product,false));
+                result.add(ProductResponseDto.toDto(product,false));
             }
         }
         return new PageImpl<>(result, pageable, products.getTotalElements());
@@ -114,11 +111,11 @@ public class ProductServiceImpl implements ProductService {
         if(user != null){
             for(Product product: products){
                 Boolean interest = interestRepository.existsByProductIdAndUserId(product.getId(),user.getId()); //이미 리뷰 작성했는지 체크
-                result.add(new ProductResponseDto().toDto(product,interest));
+                result.add(ProductResponseDto.toDto(product,interest));
             }
         }else{
             for(Product product: products){
-                result.add(new ProductResponseDto().toDto(product,false));
+                result.add(ProductResponseDto.toDto(product,false));
             }
         }
         return new PageImpl<>(result, pageable, products.getTotalElements());
@@ -136,11 +133,11 @@ public class ProductServiceImpl implements ProductService {
         if(user != null){
             for(Product product: products){
                 Boolean interest = interestRepository.existsByProductIdAndUserId(product.getId(),user.getId()); //이미 리뷰 작성했는지 체크
-                result.add(new ProductResponseDto().toDto(product,interest));
+                result.add(ProductResponseDto.toDto(product,interest));
             }
         }else{
             for(Product product: products){
-                result.add(new ProductResponseDto().toDto(product,false));
+                result.add(ProductResponseDto.toDto(product,false));
             }
         }
         return new PageImpl<>(result, pageable, products.getTotalElements());
@@ -157,11 +154,11 @@ public class ProductServiceImpl implements ProductService {
         if(user != null){
             for(Product product: products){
                 Boolean interest = interestRepository.existsByProductIdAndUserId(product.getId(),user.getId()); //이미 리뷰 작성했는지 체크
-                result.add(new ProductResponseDto().toDto(product,interest));
+                result.add(ProductResponseDto.toDto(product,interest));
             }
         }else{
             for(Product product: products){
-                result.add(new ProductResponseDto().toDto(product,false));
+                result.add(ProductResponseDto.toDto(product,false));
             }
         }
         return new PageImpl<>(result, pageable, products.getTotalElements());
@@ -180,11 +177,11 @@ public class ProductServiceImpl implements ProductService {
         if(user != null){
             for(Product product: products){
                 Boolean interest = interestRepository.existsByProductIdAndUserId(product.getId(),user.getId()); //이미 리뷰 작성했는지 체크
-                result.add(new ProductResponseDto().toDto(product,interest));
+                result.add(ProductResponseDto.toDto(product,interest));
             }
         }else{
             for(Product product: products){
-                result.add(new ProductResponseDto().toDto(product,false));
+                result.add(ProductResponseDto.toDto(product,false));
             }
         }
         return new PageImpl<>(result, pageable, products.getTotalElements());
@@ -202,11 +199,11 @@ public class ProductServiceImpl implements ProductService {
         if(user != null){
             for(ProductItem ProductDetail : productItem){
                 Boolean interest = interestRepository.existsByProductIdAndUserId(ProductDetail.getId(),user.getId()); //이미 리뷰 작성했는지 체크
-                result.add(new ProductDetailResponseDto().toDto(ProductDetail,interest));
+                result.add(ProductDetailResponseDto.toDto(ProductDetail,interest));
             }
         }else{
             for(ProductItem ProductDetail : productItem){
-                result.add(new ProductDetailResponseDto().toDto(ProductDetail,false));
+                result.add(ProductDetailResponseDto.toDto(ProductDetail,false));
             }
         }
 
